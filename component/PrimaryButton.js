@@ -1,20 +1,20 @@
-import { View,Text, Pressable, StyleSheet,Platform } from "react-native"
+import { View, Text, Pressable, StyleSheet, Platform } from "react-native"
 
-function PrimaryButton ({onPress}){
+function PrimaryButton({ onPress }) {
     return <View >
-        <Pressable  onPress={onPress} style={({pressed})=> pressed && styles.pressed }>
+        <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.buttonContainer}>
-            <Text>Touch!</Text>
+                <Text>Touch!</Text>
             </View>
-        </Pressable> 
-        </View>
+        </Pressable>
+    </View>
 }
 
 export default PrimaryButton;
 
 const styles = StyleSheet.create({
-    buttonContainer:{
-        padding:130,
+    buttonContainer: {
+        padding: 130,
         margin: 16,
         borderRadius: 8,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
@@ -24,9 +24,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 8,
-        alignItems:"center"
+        alignItems: "center"
     },
-    pressed:{
-        opacity:0.5
+    pressed: {
+        opacity: 0.5
     }
 })

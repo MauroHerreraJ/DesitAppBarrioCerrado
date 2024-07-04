@@ -1,9 +1,9 @@
-import { Text } from "react-native";
+import DataList from "../component/DataList";
 
-function Configuration (){
+function Configuration() {
 
-    return (   
-        <Text> Configuration!</Text>
+    return (
+        <DataList/>
     );
 }
 export default Configuration;
