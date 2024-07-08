@@ -4,6 +4,11 @@ import SaveButton from "./SaveButton";
 
 function DataList() {
 
+    function dataSave(){
+        
+    }
+
+
     return (
         <>
         <View style={styles.imputContainer}>
@@ -21,7 +26,7 @@ function DataList() {
             </View>
             </View>
 
-            <SaveButton/>
+            <SaveButton />
         </>
     );
 }

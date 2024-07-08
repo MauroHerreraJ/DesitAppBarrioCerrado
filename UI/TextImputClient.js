@@ -9,6 +9,7 @@ function TextImputClient(props) {
         setEnteredText(enteredText);
     }
 
+   
     return (
         <View style={styles.textContainer}>
         <TextInput

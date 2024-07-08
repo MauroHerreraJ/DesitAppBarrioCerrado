@@ -1,5 +1,16 @@
 import { View,StyleSheet,Text,Pressable } from "react-native";
-function SaveButton({onPress}){
+import { useNavigation } from "@react-navigation/native";
+
+
+function SaveButton({}){
+    const navigation = useNavigation();
+
+    function dataSave(){
+        navigation.goBack();
+        console.log("press");
+    } 
+
+
     return(
         <View style={styles.buttonOuterContainer}>
         <Pressable 
@@ -8,7 +19,7 @@ function SaveButton({onPress}){
                ?[styles.buttonInnerContainer,styles.pressed]
                : styles.buttonInnerContainer
         }
-        onPress={onPress} 
+        onPress={dataSave}
         android_ripple={{color:"#222266"}}>
 
           <Text style={styles.buttonText}>Guardar</Text>

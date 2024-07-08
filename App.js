@@ -11,6 +11,11 @@ const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function Navigation() {
+
+  function dataSave(enteredText){
+
+  }
+
   return (
     <BottomTabs.Navigator>
       <BottomTabs.Screen 
@@ -44,7 +49,6 @@ export default function App() {
             headerTintColor: "white"
           }}>
           <Stack.Screen name="AllButton" component={Navigation} options={{ title: "DesitApp" }} />
-          <Stack.Screen name="Configuration" component={Configuration} options={{ title: "Configurations" }} />
         </Stack.Navigator>
 
       </NavigationContainer>
