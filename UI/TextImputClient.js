@@ -3,11 +3,15 @@ import { StyleSheet, TextInput,View } from "react-native";
 
 function TextImputClient(props) {
 
-    const [enteredText, setEnteredText] = useState("");
+    const [enteredConfigText, setEnteredText] = useState("");
 
     function InputHandler(enteredText) {
         setEnteredText(enteredText);
+        props.save(enteredConfigText)
+
     }
+
+    
 
    
     return (

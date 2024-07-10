@@ -2,12 +2,13 @@ import { View,StyleSheet,Text,Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
-function SaveButton({}){
+function SaveButton(){
     const navigation = useNavigation();
 
-    function dataSave(){
+    function dataSave(props){
+        props.save(enteredText);
         navigation.goBack();
-        console.log("press");
+        
     } 
 
 
