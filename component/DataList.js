@@ -18,7 +18,7 @@ function DataList() {
                 </View>
                 <View>
                     <Text>Código Central</Text>
-                    <TextImputClient text={"Ingrese código de central"} />
+                    <TextImputClient text={"Ingrese código de central"} />5
                 </View>
             </View>
 

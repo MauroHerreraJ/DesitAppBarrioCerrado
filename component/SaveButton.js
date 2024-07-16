@@ -2,11 +2,11 @@ import { View,StyleSheet,Text,Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
-function SaveButton(){
+function SaveButton({newData}){
     const navigation = useNavigation();
 
-    function dataSave(props){
-        props.save(enteredText);
+    function dataSave(){
+        console.log(newData)
         navigation.goBack();
         
     } 
@@ -25,7 +25,7 @@ function SaveButton(){
 
           <Text style={styles.buttonText}>Guardar</Text>
 
-        </Pressable>
+        </Pressable> 
       </View>
     
     );

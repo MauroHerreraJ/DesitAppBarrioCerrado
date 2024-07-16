@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { StyleSheet, TextInput,View } from "react-native";
+import SaveButton from "../component/SaveButton";
 
 function TextImputClient(props) {
 
     const [enteredConfigText, setEnteredText] = useState("");
 
+   
     function InputHandler(enteredText) {
         setEnteredText(enteredText);
-        props.save(enteredConfigText)
-
+        
     }
 
-    
+    console.log(enteredConfigText);
+
+     const newData= enteredConfigText;
+
+    <SaveButton newData ={newData}/>
+
 
    
     return (
