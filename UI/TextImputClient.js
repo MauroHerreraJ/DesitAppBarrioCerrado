@@ -1,53 +1,56 @@
 import { useState } from "react";
-import { StyleSheet, TextInput,View } from "react-native";
-import SaveButton from "../component/SaveButton";
+import { StyleSheet, TextInput, View,Pressable } from "react-native"
 
-function TextImputClient(props) {
+function TextImputClient({text,onAddData}) {
 
     const [enteredConfigText, setEnteredText] = useState("");
 
-   
+
     function InputHandler(enteredText) {
         setEnteredText(enteredText);
-        
+
     }
 
-    console.log(enteredConfigText);
+    function addDataHandler(){
+        onAddData(enteredConfigText);
+        setEnteredText("");
+      }
 
-     const newData= enteredConfigText;
 
-    <SaveButton newData ={newData}/>
-
-
-   
     return (
+                <Pressable onPress={addDataHandler} style={({ pressed }) => pressed && styles.pressed}>
         <View style={styles.textContainer}>
-        <TextInput
-            style={styles.textImput}
-            placeholder={props.text}
-            onChangeText={InputHandler}
-        />
-        </View>
+                <TextInput
+                    style={styles.textImput}
+                    placeholder={text}
+                    onChangeText={InputHandler}
+                    value={enteredConfigText}
+                />
+
+            </View>
+        </Pressable>
+
     );
 
 }
 export default TextImputClient;
 
 const styles = StyleSheet.create({
-    textImput:{
+    textImput: {
         borderWidth: 1,
-        borderColor:"#dbd9df",
-        backgroundColor:"#dbd9df",
-        width:"100%",
+        borderColor: "#dbd9df",
+        backgroundColor: "#dbd9df",
+        width: "100%",
         padding: 12,
-        color:"#120438",
-        borderRadius:6,
-        
-    },
-    textContainer:{
-        marginTop:3,
-        marginBottom:15
-        
+        color: "#120438",
+        borderRadius: 6,
 
     },
+    textContainer: {
+        marginTop: 3,
+        marginBottom: 15
+    },
+    pressed: {
+        opacity: 0.7
+    }
 })

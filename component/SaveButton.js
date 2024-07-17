@@ -1,14 +1,16 @@
+import React from "react";
 import { View,StyleSheet,Text,Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
-function SaveButton({newData}){
+
+
+function SaveButton({array}){
     const navigation = useNavigation();
 
     function dataSave(){
-        console.log(newData)
-        navigation.goBack();
-        
+        console.log(array) 
+        navigation.goBack();       
     } 
 
 

@@ -1,24 +1,29 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View,Text, StyleSheet } from "react-native";
 import TextImputClient from "../UI/TextImputClient";
 import SaveButton from "./SaveButton";
 
 function DataList() {
+    
+    function addDataHandler(enteredConfigText){
+        console.log(enteredConfigText)
+      }
 
+      
 
     return (
         <>
             <View style={styles.imputContainer}>
                 <View>
                     <Text>Número de Cuenta</Text>
-                    <TextImputClient text={"Ingrese número de cuenta"} />
+                    <TextImputClient text={"Ingrese número de cuenta"}  onAddData= {addDataHandler} />
                 </View>
                 <View>
                     <Text>Código de Alta</Text>
-                    <TextImputClient text={"Ingrese código de alta"} />
+                    <TextImputClient text={"Ingrese código de alta"}  onAddData= {addDataHandler}/>
                 </View>
                 <View>
                     <Text>Código Central</Text>
-                    <TextImputClient text={"Ingrese código de central"} />5
+                    <TextImputClient text={"Ingrese código de central"} onAddData= {addDataHandler}/>
                 </View>
             </View>
 

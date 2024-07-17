@@ -12,10 +12,7 @@ const BottomTabs = createBottomTabNavigator();
 
 function Navigation() {
 
-  function dataSave(enteredText){
-
-  }
-
+ 
   return (
     <BottomTabs.Navigator>
       <BottomTabs.Screen 
