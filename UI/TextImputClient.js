@@ -1,30 +1,27 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View,Pressable } from "react-native"
+import { StyleSheet, TextInput, View, Pressable } from "react-native"
 
-function TextImputClient({text,onAddData}) {
+function TextImputClient({ text, onAddData }) {
 
     const [enteredConfigText, setEnteredText] = useState("");
 
-
     function InputHandler(enteredText) {
         setEnteredText(enteredText);
-
     }
 
-    function addDataHandler(){
+    function addDataHandler() {
         onAddData(enteredConfigText);
-        setEnteredText("");
-      }
+        setEnteredText("")
+    }
 
 
     return (
-                <Pressable onPress={addDataHandler} style={({ pressed }) => pressed && styles.pressed}>
-        <View style={styles.textContainer}>
+        <Pressable onPress={addDataHandler} style={({ pressed }) => pressed && styles.pressed}>
+            <View style={styles.textContainer}>
                 <TextInput
                     style={styles.textImput}
                     placeholder={text}
                     onChangeText={InputHandler}
-                    value={enteredConfigText}
                 />
 
             </View>

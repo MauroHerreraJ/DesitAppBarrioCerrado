@@ -5,11 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 
 
 
-function SaveButton({array}){
+function SaveButton({dataClient}){
     const navigation = useNavigation();
 
     function dataSave(){
-        console.log(array) 
+        console.log(dataClient) 
         navigation.goBack();       
     } 
 
