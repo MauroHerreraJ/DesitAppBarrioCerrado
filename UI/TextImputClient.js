@@ -1,34 +1,27 @@
-import { useState } from "react";
-import { StyleSheet, TextInput, View, Pressable } from "react-native"
+import { useState, useEffect } from "react";
+import { StyleSheet, TextInput, View } from "react-native"
 
-function TextImputClient({ text, onAddData }) {
+function TextImputClient({ text, onDattaChange }) {
 
-    const [enteredConfigText, setEnteredText] = useState("");
+    const [data, setData] = useState("");
 
     function InputHandler(enteredText) {
-        setEnteredText(enteredText);
+        setData(enteredText);
     }
 
-    function addDataHandler() {
-        onAddData(enteredConfigText);
-        setEnteredText("")
-    }
-
+    useEffect(() => {
+        onDattaChange(data);
+    }, [data]);
 
     return (
-        <Pressable onPress={addDataHandler} style={({ pressed }) => pressed && styles.pressed}>
-            <View style={styles.textContainer}>
-                <TextInput
-                    style={styles.textImput}
-                    placeholder={text}
-                    onChangeText={InputHandler}
-                />
-
-            </View>
-        </Pressable>
-
+        <View style={styles.textContainer}>
+            <TextInput
+                style={styles.textImput}
+                placeholder={text}
+                onChangeText={InputHandler}
+            />
+        </View>
     );
-
 }
 export default TextImputClient;
 
@@ -41,7 +34,6 @@ const styles = StyleSheet.create({
         padding: 12,
         color: "#120438",
         borderRadius: 6,
-
     },
     textContainer: {
         marginTop: 3,
