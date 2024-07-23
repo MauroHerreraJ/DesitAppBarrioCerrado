@@ -1,26 +1,27 @@
 import { View,Pressable, StyleSheet, Platform } from "react-native"
 import {Ionicons} from "@expo/vector-icons";
 
-function PrimaryButton({ onPress }) {
+function SecondaryButton({ onPress }) {
     return <View >
         <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.buttonContainer}>
-               <Ionicons name="warning" size={80} color="white"/>
+               <Ionicons name="warning" size={40} color="white"/>
             </View>
         </Pressable>
     </View>
 }
 
-export default PrimaryButton;
+export default SecondaryButton;
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        
-        padding: 100,
-        margin: 16,
+        padding: 16,
+        margin:20,
         borderRadius: 8,
+        paddingVertical:8,
+        paddingHorizontal:60,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
-        backgroundColor: '#d11818',
+        backgroundColor: '#1824d1',
         elevation: 4,
         shadowColor: 'black',
         shadowOpacity: 0.25,

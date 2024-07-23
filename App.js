@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons"
 
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
+import IconButton from './component/IconButton';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -15,7 +16,7 @@ function Navigation() {
  
   return (
     <BottomTabs.Navigator> 
-      <BottomTabs.Screen 
+      <BottomTabs.Screen  
       name='Principal' 
       component={AllButtons}
       options={{
@@ -36,6 +37,10 @@ function Navigation() {
 }
 
 export default function App() {
+  
+  function infoUser(){
+    console.log("hola")
+  }
   return (
     <>
       <StatusBar style='light' />
@@ -45,7 +50,17 @@ export default function App() {
             headerStyle: { backgroundColor: "#0b0b61" },
             headerTintColor: "white"
           }}>
-          <Stack.Screen name="AllButton" component={Navigation} options={{ title: "DesitApp" }} />
+          <Stack.Screen 
+          name="AllButton" 
+          component={Navigation} 
+          options={({ navigation }) => ({
+            title: 'Inicio',
+            headerRight: () => (
+              <IconButton infoUser={infoUser}
+              />
+            ),
+          })} 
+          />
         </Stack.Navigator>
 
       </NavigationContainer>

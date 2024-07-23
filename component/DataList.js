@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback,Keyboard } from "react-native";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -22,7 +22,7 @@ function DataList() {
         }
       }, [accountNumber, registrationCode,centralCode]);
 
-
+ 
     function addAcountNumber(data) {
         setAccountNumber(data);
     }
@@ -43,6 +43,7 @@ function DataList() {
 
     return (
         <>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.imputContainer}>
                 <View>
                     <Text>Número de Cuenta</Text>
@@ -69,8 +70,10 @@ function DataList() {
                         />
                 </View>
             </View>
+            </TouchableWithoutFeedback>
 
             <SaveButton onPress={saveData} isEnabled={isButtonEnabled}/>
+            
         </>
     );
 }

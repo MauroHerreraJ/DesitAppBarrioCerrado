@@ -19,7 +19,7 @@ function TextImputClient({ text, onDattaChange,value}) {
                 style={styles.textImput}
                 placeholder={text}
                 onChangeText={InputHandler}
-                keyboardType="numeric"
+                keyboardType="numeric" 
                 value={value}
             />
         </View>
