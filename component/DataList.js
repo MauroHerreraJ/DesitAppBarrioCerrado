@@ -4,15 +4,16 @@ import { useNavigation } from "@react-navigation/native";
 
 import TextImputClient from "../UI/TextImputClient";
 import SaveButton from "./SaveButton";
-
+ 
 function DataList() {
     
     const navigation = useNavigation();
+
     const [accountNumber, setAccountNumber] = useState("");
     const [registrationCode, setregistercode] = useState("");
     const [centralCode, setCentralCode] = useState("");
-    const [isButtonEnabled,setIsButtonEnabled] = useState(false)
 
+    const [isButtonEnabled,setIsButtonEnabled] = useState(false)
     useEffect(() => {
         if (accountNumber.length > 0 && registrationCode.length > 0 && centralCode.length > 0) {
           setIsButtonEnabled(true);
@@ -20,6 +21,7 @@ function DataList() {
           setIsButtonEnabled(false);
         }
       }, [accountNumber, registrationCode,centralCode]);
+
 
     function addAcountNumber(data) {
         setAccountNumber(data);
@@ -31,8 +33,11 @@ function DataList() {
         setCentralCode(data);
     }
     function saveData() {
+        setAccountNumber('');
+        setregistercode('');
+        setCentralCode('');   
         console.log(accountNumber, registrationCode, centralCode)
-        navigation.goBack();   
+        navigation.goBack();
     }
     
 
@@ -43,19 +48,25 @@ function DataList() {
                     <Text>Número de Cuenta</Text>
                     <TextImputClient
                         text={"Ingrese número de cuenta"}
-                        onDattaChange={addAcountNumber} />
+                        onDattaChange={addAcountNumber}
+                        value={accountNumber}
+                         />
                 </View>
                 <View>
                     <Text>Código de Alta</Text>
                     <TextImputClient
                         text={"Ingrese código de alta"}
-                        onDattaChange={addRegistrationCode} />
+                        onDattaChange={addRegistrationCode}
+                        value={registrationCode} 
+                        />
                 </View>
                 <View>
                     <Text>Código Central</Text>
                     <TextImputClient
                         text={"Ingrese código de central"}
-                        onDattaChange={addCentralcode} />
+                        onDattaChange={addCentralcode}
+                        value={centralCode} 
+                        />
                 </View>
             </View>
 

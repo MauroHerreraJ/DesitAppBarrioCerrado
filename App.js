@@ -14,7 +14,7 @@ function Navigation() {
 
  
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator> 
       <BottomTabs.Screen 
       name='Principal' 
       component={AllButtons}

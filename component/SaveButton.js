@@ -1,20 +1,16 @@
-import React from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 
 function SaveButton({ onPress, isEnabled }) {
 
+
     return (
         <View style={styles.buttonOuterContainer}>
             <Pressable
-                style={({ pressed }) =>
-                    pressed
-                        ? [styles.buttonInnerContainer, styles.pressed]
-                        : styles.buttonInnerContainer
-                }
+                style={[styles.buttonInnerContainer, !isEnabled&& styles.pressed]}
                 onPress={onPress}
                 disabled={!isEnabled}
                 android_ripple={{ color: "#222266" }}
-            >
+            > 
                 <Text style={styles.buttonText}>Guardar</Text>
             </Pressable>
         </View>
@@ -40,6 +36,6 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     pressed: {
-        opacity: 0.75
+        opacity: 0.55
     }
 });

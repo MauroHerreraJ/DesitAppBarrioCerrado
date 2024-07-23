@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, TextInput, View } from "react-native"
 
-function TextImputClient({ text, onDattaChange }) {
+function TextImputClient({ text, onDattaChange,value}) {
 
     const [data, setData] = useState("");
 
@@ -13,12 +13,14 @@ function TextImputClient({ text, onDattaChange }) {
         onDattaChange(data);
     }, [data]);
 
-    return (
+    return ( 
         <View style={styles.textContainer}>
             <TextInput
                 style={styles.textImput}
                 placeholder={text}
                 onChangeText={InputHandler}
+                keyboardType="numeric"
+                value={value}
             />
         </View>
     );
