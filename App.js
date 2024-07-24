@@ -28,7 +28,7 @@ function Navigation() {
       <BottomTabs.Screen 
       name="Configuration" 
       component={Configuration} 
-      options={{headerShown: false,
+      options={{headerShown: false, title:"Configuración",
         tabBarIcon: ({color,size}) => <Ionicons name='settings-outline' size={size} color={color}/>  
 
       }} />
@@ -38,9 +38,6 @@ function Navigation() {
 
 export default function App() {
   
-  function infoUser(){
-    console.log("hola")
-  }
   return (
     <>
       <StatusBar style='light' />
@@ -48,18 +45,11 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{
             headerStyle: { backgroundColor: "#0b0b61" },
-            headerTintColor: "white"
+            headerTintColor: "white",
           }}>
           <Stack.Screen 
           name="AllButton" 
           component={Navigation} 
-          options={({ navigation }) => ({
-            title: 'Inicio',
-            headerRight: () => (
-              <IconButton infoUser={infoUser}
-              />
-            ),
-          })} 
           />
         </Stack.Navigator>
 

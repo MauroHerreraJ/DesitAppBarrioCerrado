@@ -24,13 +24,18 @@ function AllButtons() {
         <SecondaryButton onPress={fireButton} name={"flame-outline"} styles={styles1.buttonContainer} />
         <SecondaryButton onPress={medicButton} name={"medkit-outline"} styles={styles2.buttonContainer}/>
         </View>
+        <View style={styles.primaryButtonContainer}>
         <PrimaryButton onPress={primaryButton} />
+        </View>
         </>
     );
 } 
 export default AllButtons;
 
 const styles  = StyleSheet.create({
+    primaryButtonContainer:{
+        flex:0.8
+    },
     seconButtonContainer:{
         flex:1,
         flexDirection:"row",
