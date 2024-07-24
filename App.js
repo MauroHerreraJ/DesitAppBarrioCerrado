@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons"
 
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
-import IconButton from './component/IconButton';
+import IconButton from './component/IconButton'; 
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
