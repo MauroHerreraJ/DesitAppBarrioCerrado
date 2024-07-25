@@ -1,8 +1,10 @@
-import { View,StyleSheet } from "react-native";
+import { View,StyleSheet} from "react-native";
 import { styles1 } from "../constans/Styles";
 import { styles2 } from "../constans/Styles";
+
 import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
+
 
 
 

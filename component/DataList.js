@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet, TouchableWithoutFeedback,Keyboard } from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback,Keyboard, Modal } from "react-native";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import TextImputClient from "../UI/TextImputClient";
 import SaveButton from "./SaveButton";
+import MyModal from "./MyModal";
+
  
 function DataList() {
     
@@ -39,7 +41,7 @@ function DataList() {
         console.log(accountNumber, registrationCode, centralCode)
         navigation.goBack();
     }
-    
+    <MyModal accountNumber={accountNumber}/>
 
     return (
         <>
@@ -73,6 +75,7 @@ function DataList() {
             </TouchableWithoutFeedback>
 
             <SaveButton onPress={saveData} isEnabled={isButtonEnabled}/>
+
             
         </>
     );
