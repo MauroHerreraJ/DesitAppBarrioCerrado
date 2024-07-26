@@ -6,8 +6,6 @@ import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
 
 
-
-
 function AllButtons() {
 
     function primaryButton(){

@@ -73,8 +73,11 @@ function DataList() {
                 </View>
             </View>
             </TouchableWithoutFeedback>
-
+            <View style={styles.buttonContainer}>
             <SaveButton onPress={saveData} isEnabled={isButtonEnabled}/>
+            </View>
+
+
 
             
         </>
@@ -87,6 +90,9 @@ const styles = StyleSheet.create({
     imputContainer: {
         padding: 20,
         marginTop: 50
+    },
+    buttonContainer:{
+       marginTop:210,
     }
 })
 

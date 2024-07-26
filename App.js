@@ -3,15 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons"
+import { Image, View } from 'react-native';
+
 
 
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
-import IconButton from './component/IconButton';
-import { useState } from 'react';
-import MyModal from './component/MyModal';
-
-
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -19,18 +16,24 @@ const BottomTabs = createBottomTabNavigator();
 
 function Navigation() {
 
-
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#0b0b61" },
+        headerTintColor: "white",
+      }}>
       <BottomTabs.Screen
-        name='Principal'
+        name='Desit'
         component={AllButtons}
         options={{
-          headerShown: false,
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (<Ionicons name='home-outline' size={size} color={color} />),
-          tabBarBadge:2
-
+          headerLeft: () => (
+            <Image
+              source={require("./assets/logodesit.png")}
+              style={{ width: 40, height: 40, marginLeft: 10 }}
+            />
+          ),
         }} />
       <BottomTabs.Screen
         name="Configuration"
@@ -46,35 +49,20 @@ function Navigation() {
 
 export default function App() {
 
-  const [modalVisible,setModalVisible] = useState(false);
-
-  function modalHandler(){
-    setModalVisible(true);
-  }
-
   return (
     <>
       <StatusBar style='light' />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: "#0b0b61" },
-            headerTintColor: "white",
-          }}>
+            headerShown: false,
+          }}
+          >
           <Stack.Screen
-            name="Desit"
+            name="Desi"
             component={Navigation}
-            options={{
-              headerRight:()=>{
-                return<>
-                <IconButton title="Tap me" onPress={modalHandler}/>
-                <MyModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>  
-                </>
-              }
-            }}
-          />
+            />
         </Stack.Navigator>
-
       </NavigationContainer>
     </>
   );
