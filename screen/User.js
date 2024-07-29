@@ -1,9 +1,12 @@
-import { Text } from "react-native";
+import { Text,View } from "react-native";
 
 function User (){
-    return(
-        <Text>hola</Text>
-    );
-}
 
-export default User;
+    return<View>
+    <Text>Info!</Text>
+    </View>
+
+    
+} 
+
+export default User; 

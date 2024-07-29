@@ -9,6 +9,7 @@ import { Image, View } from 'react-native';
 
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
+import User from './screen/User';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -26,6 +27,7 @@ function Navigation() {
         name='Desit'
         component={AllButtons}
         options={{
+          title: "Desit",
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (<Ionicons name='home-outline' size={size} color={color} />),
           headerLeft: () => (
@@ -54,14 +56,24 @@ export default function App() {
       <StatusBar style='light' />
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          >
+        >
           <Stack.Screen
             name="Desi"
             component={Navigation}
-            />
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="User"
+            component={User}
+            options={{ 
+              presentation:"modal",
+              title:"Información del Sistema",
+              headerStyle: { backgroundColor: "#0b0b61" },
+              headerTintColor: "white"
+             }}
+
+
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

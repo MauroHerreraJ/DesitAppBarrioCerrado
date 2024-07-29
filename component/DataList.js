@@ -4,7 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import TextImputClient from "../UI/TextImputClient";
 import SaveButton from "./SaveButton";
-import MyModal from "./MyModal";
+
+
 
  
 function DataList() {
@@ -23,7 +24,8 @@ function DataList() {
           setIsButtonEnabled(false);
         }
       }, [accountNumber, registrationCode,centralCode]);
-
+     
+     
  
     function addAcountNumber(data) {
         setAccountNumber(data);
@@ -41,8 +43,8 @@ function DataList() {
         console.log(accountNumber, registrationCode, centralCode)
         navigation.goBack();
     }
-    <MyModal accountNumber={accountNumber}/>
 
+    
     return (
         <>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -75,11 +77,7 @@ function DataList() {
             </TouchableWithoutFeedback>
             <View style={styles.buttonContainer}>
             <SaveButton onPress={saveData} isEnabled={isButtonEnabled}/>
-            </View>
-
-
-
-            
+            </View>            
         </>
     );
 }

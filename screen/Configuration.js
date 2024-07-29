@@ -1,22 +1,23 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect} from "react";
+import { useNavigation } from "@react-navigation/native";
 import DataList from "../component/DataList";
-import IconButton from "../component/IconButton";
-import MyModal from "../component/MyModal";
+import IconButton from "../UI/IconButton";
 
-function Configuration({ navigation }) {
 
-    const [modalVisible, setModalVisible] = useState(false);
+function Configuration() {
+    
+    const navigation = useNavigation();
+    
 
     function modalHandler() {
-        setModalVisible(true);
+        navigation.navigate("User");
     }
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => {
                 return <>
-                    <IconButton title="Tap me" onPress={modalHandler} />
-                    <MyModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                    <IconButton title="Tap me" onPress={modalHandler} />                    
                 </>
             }
         });
