@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import TextImputClient from "../UI/TextImputClient";
 import SaveButton from "./SaveButton";
+import { storeData } from "../util/http";
 
 
 
@@ -15,6 +16,12 @@ function DataList() {
     const [accountNumber, setAccountNumber] = useState("");
     const [registrationCode, setregistercode] = useState("");
     const [centralCode, setCentralCode] = useState("");
+
+    const data = {
+        Cuenta: accountNumber,
+        Alta:registrationCode,
+        Central:centralCode
+    }
 
     const [isButtonEnabled,setIsButtonEnabled] = useState(false)
     useEffect(() => {
@@ -39,8 +46,9 @@ function DataList() {
     function saveData() {
         setAccountNumber('');
         setregistercode('');
-        setCentralCode('');   
-        console.log(accountNumber, registrationCode, centralCode)
+        setCentralCode('');  
+        storeData(data); 
+        console.log(data)
         navigation.goBack();
     }
 
