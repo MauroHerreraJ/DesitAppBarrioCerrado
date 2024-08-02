@@ -3,8 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons"
-import { Image, View } from 'react-native';
-
+import { Image } from 'react-native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 
 import AllButtons from './screen/AllButtons';
@@ -50,6 +51,14 @@ function Navigation() {
 }
 
 export default function App() {
+
+  const [fontsLoaded] = useFonts({
+    "open-sans" : require("./fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold" : require("./fonts/OpenSans-Bold.ttf"),
+  });
+
+  if (!fontsLoaded)
+    return <AppLoading/>
 
   return (
     <>

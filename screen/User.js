@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View,StyleSheet } from "react-native";
 import { fetchData } from "../util/http";
 
 function User() {
@@ -15,13 +15,28 @@ function User() {
         getData();
     }, []);
     console.log(fetchedData)
-    return (<View>
+    return (<View style={styles.dataContainer} >
         {fetchedData.map((item) => (
           <View key={item.id}>
-            <Text>Alta: {item.Alta}</Text>
-            <Text>Central: {item.Central}</Text>
-            <Text>Cuenta: {item.Cuenta}</Text>
-            <Text>id:{item.id}</Text>
+            
+            <>
+            <View style={styles.textdata}>
+            <Text text style={styles.text}>Número de cuenta: {item.Cuenta}</Text> 
+            </View>
+
+            <View style={styles.textdata}>
+            <Text text style={styles.text}>Código de alta: {item.Alta}</Text>
+            </View>
+
+            <View style={styles.textdata}>
+            <Text text style={styles.text}>Código de central: {item.Central}</Text>
+            </View>
+
+            <View style={styles.textdata}>
+            <Text text style={styles.text}>id:{item.id}</Text>  
+            </View>
+            </>
+
           </View>
         ))}
       </View>
@@ -29,3 +44,20 @@ function User() {
 }
 
 export default User;  
+
+const styles= StyleSheet.create({
+  dataContainer:{
+    padding: 20,
+    marginTop: 50,
+    alignItems:"center"
+  },
+  textdata:{
+    marginTop: 3,
+    marginBottom: 15,
+    fontSize: 36,
+  },
+  text:{
+    fontSize: 20,
+    fontFamily:"open-sans-bold",
+ }
+})
