@@ -13,6 +13,7 @@ import Configuration from './screen/Configuration';
 import User from './screen/User';
 import welcome from './screen/Welcome';
 
+
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
