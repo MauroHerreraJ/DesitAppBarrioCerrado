@@ -1,5 +1,6 @@
 import { useLayoutEffect} from "react";
 import { useNavigation } from "@react-navigation/native";
+import { ImageBackground } from "react-native";
 import DataList from "../component/DataList";
 import IconButton from "../UI/IconButton";
 
@@ -24,7 +25,11 @@ function Configuration() {
     }, [navigation, modalHandler]);
 
     return (
+        <ImageBackground source={require('../assets/126353.jpg')}
+        resizeMode="cover"
+        >
         <DataList />
+        </ImageBackground>
     );
 }
 export default Configuration; 

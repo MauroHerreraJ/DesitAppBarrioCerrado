@@ -5,6 +5,8 @@ import { styles2 } from "../constans/Styles";
 import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
 
+const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
+
 
 function AllButtons() {
 
@@ -19,6 +21,7 @@ function AllButtons() {
     }
     
     return (
+       
         <>
         <View style={styles.seconButtonContainer}>
         <SecondaryButton onPress={fireButton} name={"flame-outline"} styles={styles1.buttonContainer} />
@@ -28,6 +31,7 @@ function AllButtons() {
         <PrimaryButton onPress={primaryButton} />
         </View>
         </>
+       
     );
 } 
 export default AllButtons;

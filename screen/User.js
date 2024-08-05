@@ -31,10 +31,6 @@ function User() {
             <View style={styles.textdata}>
             <Text text style={styles.text}>Código de central: {item.Central}</Text>
             </View>
-
-            <View style={styles.textdata}>
-            <Text text style={styles.text}>id:{item.id}</Text>  
-            </View>
             </>
 
           </View>

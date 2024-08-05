@@ -11,6 +11,7 @@ import AppLoading from 'expo-app-loading';
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
 import User from './screen/User';
+import welcome from './screen/Welcome';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -53,35 +54,36 @@ function Navigation() {
 export default function App() {
 
   const [fontsLoaded] = useFonts({
-    "open-sans" : require("./fonts/OpenSans-Regular.ttf"),
-    "open-sans-bold" : require("./fonts/OpenSans-Bold.ttf"),
+    "open-sans": require("./fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./fonts/OpenSans-Bold.ttf"),
   });
 
   if (!fontsLoaded)
-    return <AppLoading/>
+    return <AppLoading />
 
   return (
     <>
       <StatusBar style='light' />
       <NavigationContainer>
-        <Stack.Navigator
-        >
+        <Stack.Navigator>
+        <Stack.Screen
+          name='Welcome'
+          component={welcome}
+           />
           <Stack.Screen
-            name="Desi"
+            name="Principal"
             component={Navigation}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="User"
+            name="Config"
             component={User}
-            options={{ 
-              presentation:"modal",
-              title:"Información del Sistema",
+            options={{
+              presentation: "modal",
+              title: "Información del Sistema",
               headerStyle: { backgroundColor: "#0b0b61" },
               headerTintColor: "white"
-             }}
-
-
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
