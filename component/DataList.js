@@ -1,27 +1,25 @@
-import { View, Text, StyleSheet, TouchableWithoutFeedback,Keyboard, Modal } from "react-native";
-import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableWithoutFeedback,Keyboard } from "react-native";
+import { useState, useEffect,useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { storeData } from "../util/http";
+import { DataUserContext } from "./store/context/dataUser-context";
 
 import TextImputClient from "../UI/TextImputClient";
 import SaveButton from "./SaveButton";
-import { storeData } from "../util/http";
-
-
-
  
 function DataList() {
     
     const navigation = useNavigation();
 
-    const [accountNumber, setAccountNumber] = useState("");
-    const [registrationCode, setregistercode] = useState("");
-    const [centralCode, setCentralCode] = useState("");
-
-    const data = {
-        Cuenta: accountNumber,
-        Alta:registrationCode,
-        Central:centralCode
-    }
+    const {
+        accountNumber,
+        setAccountNumber,
+        registrationCode,
+        setRegistrationCode,
+        centralCode,
+        setCentralCode,
+        dataUser,
+      } = useContext(DataUserContext);
 
     const [isButtonEnabled,setIsButtonEnabled] = useState(false)
     useEffect(() => {
@@ -32,26 +30,15 @@ function DataList() {
         }
       }, [accountNumber, registrationCode,centralCode]);
      
-     
- 
-    function addAcountNumber(data) {
-        setAccountNumber(data);
-    }
-    function addRegistrationCode(data) {
-        setregistercode(data);
-    }
-    function addCentralcode(data) {
-        setCentralCode(data);
-    }
-    function saveData() {
-        setAccountNumber('');
-        setregistercode('');
-        setCentralCode('');  
-        storeData(data); 
-        console.log(data)
+      function saveData() {
+        setAccountNumber(accountNumber);
+        setRegistrationCode("");
+        setCentralCode("");
+        storeData(dataUser);
+        console.log(dataUser);
         navigation.goBack();
-    }
-
+      }
+ 
     
     return (
         <>
@@ -61,7 +48,7 @@ function DataList() {
                     <Text>Número de Cuenta</Text>
                     <TextImputClient
                         text={"Ingrese número de cuenta"}
-                        onDattaChange={addAcountNumber}
+                        onDattaChange={setAccountNumber}
                         value={accountNumber}
                          />
                 </View>
@@ -69,7 +56,7 @@ function DataList() {
                     <Text>Código de Alta</Text>
                     <TextImputClient
                         text={"Ingrese código de alta"}
-                        onDattaChange={addRegistrationCode}
+                        onDattaChange={setRegistrationCode}
                         value={registrationCode} 
                         />
                 </View>
@@ -77,7 +64,7 @@ function DataList() {
                     <Text>Código Central</Text>
                     <TextImputClient
                         text={"Ingrese código de central"}
-                        onDattaChange={addCentralcode}
+                        onDattaChange={setCentralCode}
                         value={centralCode} 
                         />
                 </View>

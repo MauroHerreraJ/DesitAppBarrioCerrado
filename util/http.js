@@ -1,5 +1,4 @@
 import axios from "axios";
-import { StyleSheet } from "react-native";
 
 const BACKEND_URL = "https://desitdb-7c39e-default-rtdb.firebaseio.com/";
 

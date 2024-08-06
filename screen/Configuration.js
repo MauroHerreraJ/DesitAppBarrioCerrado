@@ -1,35 +1,43 @@
-import { useLayoutEffect} from "react";
+import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ImageBackground } from "react-native";
+import { ImageBackground, StyleSheet } from "react-native";
 import DataList from "../component/DataList";
 import IconButton from "../UI/IconButton";
+import SaveButton from "../component/SaveButton";
 
 
 function Configuration() {
-    
+
     const navigation = useNavigation();
-    
 
     function modalHandler() {
-        navigation.navigate("User");
+        navigation.navigate("Config");
     }
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => {
                 return <>
-                    <IconButton title="Tap me" onPress={modalHandler} />                    
+                    <IconButton title="Tap me" onPress={modalHandler} />
                 </>
             }
         });
     }, [navigation, modalHandler]);
 
     return (
-        <ImageBackground source={require('../assets/126353.jpg')}
-        resizeMode="cover"
+        <ImageBackground
+            source={require('../assets/126353.jpg')}
+            resizeMode="cover"
+            style={styles.rootScreen}
         >
-        <DataList />
+            <DataList />
         </ImageBackground>
     );
 }
-export default Configuration; 
+export default Configuration;
+
+const styles = StyleSheet.create({
+    rootScreen: {
+        flex: 1
+    }
+})

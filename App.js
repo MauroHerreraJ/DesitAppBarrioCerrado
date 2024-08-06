@@ -12,6 +12,7 @@ import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
 import User from './screen/User';
 import welcome from './screen/Welcome';
+import { DataUserProvider } from './component/store/context/dataUser-context';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +24,7 @@ function Navigation() {
   return (
     <BottomTabs.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: "#0b0b61" },
+        headerStyle: { backgroundColor: "grey" },
         headerTintColor: "white",
       }}>
       <BottomTabs.Screen
@@ -64,7 +65,8 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style='light' />
+      <StatusBar style='light'/>
+      <DataUserProvider>
       <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen
@@ -82,12 +84,13 @@ export default function App() {
             options={{
               presentation: "modal",
               title: "Información del Sistema",
-              headerStyle: { backgroundColor: "#0b0b61" },
+              headerStyle: { backgroundColor: "grey" },
               headerTintColor: "white"
             }}
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </DataUserProvider>
     </>
   );
 }
