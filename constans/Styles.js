@@ -1,14 +1,15 @@
 import { StyleSheet,Platform } from "react-native";
+import { GlobalStyles } from "./Colors";
 
 export const styles1=StyleSheet.create({
     buttonContainer: {
         padding: 16,
         margin:8, 
         borderRadius: 8,
-        paddingVertical:35,
-        paddingHorizontal:71,
+        paddingVertical:40,
+        paddingHorizontal:60,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
-        backgroundColor: '#f57711',
+        backgroundColor: GlobalStyles.colors.colorbuttonI,
         elevation: 4,
         shadowColor: 'black',
         shadowOpacity: 0.25,
@@ -24,10 +25,10 @@ export const styles2=StyleSheet.create({
         padding: 16,
         margin:8, 
         borderRadius: 8,
-        paddingVertical:35,
-        paddingHorizontal:71,
+        paddingVertical:40,
+        paddingHorizontal:50,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
-        backgroundColor: '#1ccc39',
+        backgroundColor: GlobalStyles.colors.botonI,
         elevation: 4,
         shadowColor: 'black',
         shadowOpacity: 0.25,

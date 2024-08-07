@@ -26,6 +26,7 @@ function Navigation() {
       screenOptions={{
         headerStyle: { backgroundColor: "grey" },
         headerTintColor: "white",
+        
       }}>
       <BottomTabs.Screen
         name='Desit'
@@ -72,6 +73,9 @@ export default function App() {
         <Stack.Screen
           name='Welcome'
           component={welcome}
+          options={{
+            headerShown: false,
+          }}
            />
           <Stack.Screen
             name="Principal"

@@ -1,11 +1,13 @@
-import { View,Pressable, StyleSheet, Platform } from "react-native"
+import { View,Pressable, StyleSheet, Platform,Text } from "react-native"
 import {Ionicons} from "@expo/vector-icons";
+import { GlobalStyles } from "../constans/Colors";
 
 function PrimaryButton({ onPress }) {
     return <View >
         <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.buttonContainer}>
                <Ionicons name="warning" size={80} color="white"/>
+               <Text style={styles.textButton}>Pánico</Text>
             </View>
         </Pressable>
     </View>
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
         margin: 16,
         borderRadius: 8,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
-        backgroundColor: '#1e88e5',
+        backgroundColor: GlobalStyles.colors.titlecolor,
         elevation: 4,
         shadowColor: 'black',
         shadowOpacity: 0.25,
@@ -29,5 +31,9 @@ const styles = StyleSheet.create({
     },
     pressed: {
         opacity: 0.5
+    },  
+    textButton:{
+        color:"white",
+        fontSize:17
     }
 })

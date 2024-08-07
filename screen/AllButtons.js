@@ -40,8 +40,10 @@ function AllButtons() {
                 resizeMode="cover"
                 style={styles.rootScreen}>
                 <View style={styles.seconButtonContainer}>
-                    <SecondaryButton onPress={fireButton} name={"flame-outline"} styles={styles1.buttonContainer} />
-                    <SecondaryButton onPress={medicButton} name={"medkit-outline"} styles={styles2.buttonContainer} />
+                    <SecondaryButton onPress={fireButton} name={"local-fire-department"} styles={styles1.buttonContainer} 
+                    text={"Incendio"}/>
+                    <SecondaryButton onPress={medicButton} name={"local-hospital"} styles={styles2.buttonContainer} 
+                    text={"Emergencia"} />
                 </View>
                 <View style={styles.primaryButtonContainer}>
                     <PrimaryButton onPress={primaryButton} />
