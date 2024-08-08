@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ImageBackground, StyleSheet } from "react-native";
 import DataList from "../component/DataList";
 import IconButton from "../UI/IconButton";
-import SaveButton from "../component/SaveButton";
+
 
 
 function Configuration() {
@@ -31,6 +31,7 @@ function Configuration() {
             style={styles.rootScreen}
         >
             <DataList />
+            
         </ImageBackground>
     );
 }

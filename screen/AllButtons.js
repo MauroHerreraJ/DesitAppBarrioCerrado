@@ -1,29 +1,14 @@
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { styles1 } from "../constans/Styles";
 import { styles2 } from "../constans/Styles";
-import { DataUserContext } from "../component/store/context/dataUser-context";
-import { useContext } from "react";
 
 import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
 
-const image = { uri: 'https://legacy.reactjs.org/logo-og.png' };
-
-
 function AllButtons() {
- 
-    const {
-        accountNumber,
-        setAccountNumber,
-        registrationCode,
-        setRegistrationCode,
-        centralCode,
-        setCentralCode,
-        dataUser,
-      } = useContext(DataUserContext);
 
     function primaryButton() {
-        console.log(accountNumber)
+        console.log("Pánico")
     }
     function fireButton() {
         console.log("Fuego")
@@ -33,24 +18,24 @@ function AllButtons() {
     }
 
     return (
-
         <>
             <ImageBackground
                 source={require('../assets/126353.jpg')}
                 resizeMode="cover"
                 style={styles.rootScreen}>
                 <View style={styles.seconButtonContainer}>
-                    <SecondaryButton onPress={fireButton} name={"local-fire-department"} styles={styles1.buttonContainer} 
-                    text={"Incendio"}/>
-                    <SecondaryButton onPress={medicButton} name={"local-hospital"} styles={styles2.buttonContainer} 
-                    text={"Emergencia"} />
+                    <SecondaryButton onPress={fireButton} name={"local-fire-department"} styles={styles1.buttonContainer}
+                        text={"Alerta"}
+                        text2={"Incendio"} />
+                    <SecondaryButton onPress={medicButton} name={"local-hospital"} styles={styles2.buttonContainer}
+                        text={"Emergencia"}
+                        text2={"Médica"} />
                 </View>
                 <View style={styles.primaryButtonContainer}>
                     <PrimaryButton onPress={primaryButton} />
                 </View>
             </ImageBackground>
         </>
-
     );
 }
 export default AllButtons;

@@ -5,21 +5,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from 'react-native';
 import { useFonts } from 'expo-font';
+import { DataUserProvider } from './component/store/context/dataUser-context';
+
+
 import AppLoading from 'expo-app-loading';
-
-
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
 import User from './screen/User';
 import welcome from './screen/Welcome';
-import { DataUserProvider } from './component/store/context/dataUser-context';
 
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 
-function Navigation() {
+function Navigation() { 
 
   return (
     <BottomTabs.Navigator
