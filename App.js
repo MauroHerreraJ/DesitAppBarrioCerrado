@@ -24,7 +24,7 @@ function Navigation() {
   return (
     <BottomTabs.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: "grey" },
+        headerStyle: { backgroundColor: "#696969" },
         headerTintColor: "white",
         
       }}>
