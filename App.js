@@ -6,9 +6,10 @@ import { Ionicons } from "@expo/vector-icons"
 import { Image } from 'react-native';
 import { useFonts } from 'expo-font';
 import { DataUserProvider } from './component/store/context/dataUser-context';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect, useState } from 'react';
 
 
-import AppLoading from 'expo-app-loading';
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
 import User from './screen/User';
@@ -18,15 +19,14 @@ import welcome from './screen/Welcome';
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-
-function Navigation() { 
+function Navigation() {
 
   return (
     <BottomTabs.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: "#696969" },
         headerTintColor: "white",
-        
+
       }}>
       <BottomTabs.Screen
         name='Desit'
@@ -61,39 +61,65 @@ export default function App() {
     "open-sans-bold": require("./fonts/OpenSans-Bold.ttf"),
   });
 
-  if (!fontsLoaded)
-    return <AppLoading />
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        // Preload fonts or any other task
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  useEffect(() => {
+    if (fontsLoaded && appIsReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, appIsReady]);
+
+  if (!fontsLoaded || !appIsReady) {
+    return null; // or a custom loading component
+  }
+
+
 
   return (
     <>
-      <StatusBar style='light'/>
+      <StatusBar style='light' />
       <DataUserProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-        <Stack.Screen
-          name='Welcome'
-          component={welcome}
-          options={{
-            headerShown: false,
-          }}
-           />
-          <Stack.Screen
-            name="Principal"
-            component={Navigation}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Config"
-            component={User}
-            options={{
-              presentation: "modal",
-              title: "Información del Sistema",
-              headerStyle: { backgroundColor: "grey" },
-              headerTintColor: "white"
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name='Welcome'
+              component={welcome}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Principal"
+              component={Navigation}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Config"
+              component={User}
+              options={{
+                presentation: "modal",
+                title: "Información del Sistema",
+                headerStyle: { backgroundColor: "grey" },
+                headerTintColor: "white"
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       </DataUserProvider>
     </>
   );

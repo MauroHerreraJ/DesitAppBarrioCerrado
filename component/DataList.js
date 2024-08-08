@@ -31,7 +31,7 @@ function DataList() {
   }, [accountNumber, registrationCode, centralCode]);
 
   function saveData() {
-    setAccountNumber(accountNumber);
+    setAccountNumber("");
     setRegistrationCode("");
     setCentralCode("");
     storeData(dataUser);

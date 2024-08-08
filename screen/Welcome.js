@@ -28,6 +28,9 @@ function Welcome({ navigation }) {
                         <Image source={require("../assets/logodesit.png")}
                             style={{ width: 70, height: 70 }} />
                     </View>
+                    <View>
+                        <Text style={styles.textImage}>Desit SA</Text>
+                    </View>
                 </View>
             </ImageBackground>
         </>
@@ -75,7 +78,13 @@ const styles = StyleSheet.create({
     },
    imageContainer:{
     alignItems:"center",
-    marginTop:130
+    marginTop:130,
+    marginBottom:5
+   },
+   textImage: {
+    textAlign: "center",
+    fontSize: 14,
+    color:"white"
    }
 })
 
