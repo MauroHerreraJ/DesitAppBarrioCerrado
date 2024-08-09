@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { StyleSheet, TextInput, View } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons";
 
-function TextImputClient({ text, onDattaChange, value }) {
-    const [data, setData] = useState("");
+function TextImputClient({ text, onDattaChange, value,name,type }) {
+    const [data, setData] = useState(""); 
 
     function InputHandler(enteredText) {
         setData(enteredText);
@@ -19,10 +19,10 @@ function TextImputClient({ text, onDattaChange, value }) {
                 style={styles.textImput}
                 placeholder={text}
                 onChangeText={InputHandler}
-                keyboardType="numeric"
+                keyboardType={type}
                 value={value}
             />
-            <MaterialIcons name="person" size={24} color="#000" style={styles.icon} />
+            <MaterialIcons name={name} size={24} color="#000" style={styles.icon} />
         </View>
     );
 }

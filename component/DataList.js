@@ -12,28 +12,28 @@ function DataList() {
   const navigation = useNavigation();
 
   const {
-    accountNumber,
-    setAccountNumber,
+    userName,
+    setUserName,
+    document,
+    setDocument,
     registrationCode,
     setRegistrationCode,
-    centralCode,
-    setCentralCode,
     dataUser,
   } = useContext(DataUserContext);
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   useEffect(() => {
-    if (accountNumber.length > 0 && registrationCode.length > 0 && centralCode.length > 0) {
+    if (userName.length > 0 && document.length > 0 && registrationCode.length > 0) {
       setIsButtonEnabled(true);
     } else {
       setIsButtonEnabled(false);
     }
-  }, [accountNumber, registrationCode, centralCode]);
+  }, [userName, document, registrationCode]);
 
   function saveData() {
-    setAccountNumber("");
+    setUserName("");
+    setDocument("");
     setRegistrationCode("");
-    setCentralCode("");
     storeData(dataUser);
     console.log(dataUser);
     navigation.goBack();
@@ -45,12 +45,23 @@ function DataList() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.imputContainer}>
           <View>
-            <Text style={styles.text}>Número de Cuenta</Text>
+            <Text style={styles.text}>Apellido/Nombre</Text>
             <TextImputClient
-              text={"Ingrese número de cuenta"}
-              onDattaChange={setAccountNumber}
-              value={accountNumber}
+              text={"Ingrese Apellido/Nombre"}
+              onDattaChange={setUserName}
+              value={userName}
+              name={"person"}
               />
+          </View>
+          <View>
+            <Text style={styles.text}>Documento</Text>
+            <TextImputClient
+              text={"Ingrese número de documento"}
+              onDattaChange={setDocument}
+              value={document}
+              name={"subtitles"}
+              type="numeric"
+            />
           </View>
           <View>
             <Text style={styles.text}>Código de Alta</Text>
@@ -58,14 +69,8 @@ function DataList() {
               text={"Ingrese código de alta"}
               onDattaChange={setRegistrationCode}
               value={registrationCode}
-            />
-          </View>
-          <View>
-            <Text style={styles.text}>Código Central</Text>
-            <TextImputClient
-              text={"Ingrese código de central"}
-              onDattaChange={setCentralCode}
-              value={centralCode}
+              name={"vpn-key"}
+              type="numeric"
             />
           </View>
         </View>

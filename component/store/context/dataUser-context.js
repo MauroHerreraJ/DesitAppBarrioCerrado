@@ -5,14 +5,14 @@ export const DataUserContext = createContext();
 
 // Crear el proveedor del contexto
 export const DataUserProvider = ({ children }) => {
-  const [accountNumber, setAccountNumber] = useState("");
+  const [userName, setUserName] = useState("");
+  const [document, setDocument] = useState("");
   const [registrationCode, setRegistrationCode] = useState("");
-  const [centralCode, setCentralCode] = useState("");
 
   const dataUser = {
-    Cuenta: accountNumber,
+    Usuario: userName,
+    Documento: document ,
     Alta: registrationCode,
-    Central: centralCode,
   };
 
 
@@ -21,12 +21,12 @@ export const DataUserProvider = ({ children }) => {
   return (
     <DataUserContext.Provider
       value={{
-        accountNumber,
-        setAccountNumber,
+        userName,
+        setUserName,
+        document,
+        setDocument,
         registrationCode,
         setRegistrationCode,
-        centralCode,
-        setCentralCode,
         dataUser,
       }}
     >

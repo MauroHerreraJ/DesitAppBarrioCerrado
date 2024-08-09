@@ -22,20 +22,20 @@ function User() {
           <View key={item.id}>
             <>
               <View style={styles.textContainer}>
-                <Text style={styles.text}>Número de cuenta: </Text>
-                <Text style={styles.textData}>{item.Cuenta}</Text>
+                <Text style={styles.text}>Usuario: </Text>
+                <Text style={styles.textData}>{item.Usuario}</Text>
                 <View style={styles.underline}></View>
               </View>
 
               <View style={styles.textContainer}>
-                <Text style={styles.text}>Código de alta: </Text>
-                <Text style={styles.textData}>{item.Alta}</Text>
+                <Text style={styles.text}>Documento: </Text>
+                <Text style={styles.textData}>{item.Documento}</Text>
                 <View style={styles.underline}></View>
               </View>
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Código de central: </Text>
-                <Text style={styles.textData}>{item.Central}</Text>
+                <Text style={styles.textData}>{item.Alta}</Text>
                 <View style={styles.underline}></View>
               </View>
             </>

@@ -1,8 +1,6 @@
 import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ImageBackground, StyleSheet } from "react-native";
-import { useContext } from "react";
-import { DataUserContext } from "../component/store/context/dataUser-context";
 
 import DataList from "../component/DataList";
 import IconButton from "../UI/IconButton";
@@ -10,25 +8,12 @@ import IconButton from "../UI/IconButton";
 function Configuration() {
 
     const navigation = useNavigation();
-    const {
-        accountNumber,
-        setAccountNumber,
-        registrationCode,
-        setRegistrationCode,
-        centralCode,
-        setCentralCode,
-        dataUser,
-      } = useContext(DataUserContext);
 
     function modalHandler() {
-        if(accountNumber.length > 0 && registrationCode.length > 0 && centralCode.length > 0){
-            navigation.navigate("Config");
-        } else{
-            
-            console.log("modal")
-        }
+        navigation.navigate("Config");
+
     }
- 
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => {

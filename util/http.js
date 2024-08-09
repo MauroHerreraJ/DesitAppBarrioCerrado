@@ -13,9 +13,9 @@ export async function fetchData(){
    for(const key in response.data){
     const dataObj = {
         id:key,
+        Usuario: response.data[key].Usuario,
+        Documento: response.data[key].Documento,
         Alta: response.data[key].Alta,
-        Central: response.data[key].Central,
-        Cuenta: response.data[key].Cuenta,
     };
     dataClient.push(dataObj);
    }
