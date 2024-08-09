@@ -34,8 +34,26 @@ function User() {
               </View>
 
               <View style={styles.textContainer}>
-                <Text style={styles.text}>Código de central: </Text>
+                <Text style={styles.text}>Código de Alta: </Text>
                 <Text style={styles.textData}>{item.Alta}</Text>
+                <View style={styles.underline}></View>
+              </View>
+
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>Licencia: </Text>
+                <Text style={styles.textData}>{item.Licencia}</Text>
+                <View style={styles.underline}></View>
+              </View>
+
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>Central: </Text>
+                <Text style={styles.textData}>{item.Central}</Text>
+                <View style={styles.underline}></View>
+              </View>
+
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>Cuenta: </Text>
+                <Text style={styles.textData}>{item.Cuenta}</Text>
                 <View style={styles.underline}></View>
               </View>
             </>
@@ -60,7 +78,7 @@ const styles = StyleSheet.create({
   dataContainer: {
     flex: 1,
     padding: 20,
-    marginTop: 50,
+    marginTop: 30,
   },
   textContainer: {
     marginTop: 3,
@@ -89,8 +107,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     fontSize: 15
-  }, imageContainer:{
-    alignItems:"center",
-    marginBottom:20
-   }
+  }, imageContainer: {
+    alignItems: "center",
+    marginBottom: 20
+  }
 })
