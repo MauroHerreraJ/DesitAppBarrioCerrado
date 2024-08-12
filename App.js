@@ -24,7 +24,7 @@ function Navigation() {
   return (
     <BottomTabs.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: "#696969" },
+        headerStyle: { backgroundColor: '#0d47a1' },
         headerTintColor: "white",
 
       }}>
@@ -37,8 +37,8 @@ function Navigation() {
           tabBarIcon: ({ color, size }) => (<Ionicons name='home-outline' size={size} color={color} />),
           headerLeft: () => (
             <Image
-              source={require("./assets/logodesit.png")}
-              style={{ width: 40, height: 40, marginLeft: 10 }}
+              source={require("./assets/logofondoblanco.png")}
+              style={{ width: 65, height: 65, marginLeft: 5 }}
             />
           ),
         }} />
@@ -114,7 +114,7 @@ export default function App() {
               options={{
                 presentation: "modal",
                 title: "Información del Sistema",
-                headerStyle: { backgroundColor: "grey" },
+                headerStyle: { backgroundColor: '#0d47a1' },
                 headerTintColor: "white"
               }}
             />
