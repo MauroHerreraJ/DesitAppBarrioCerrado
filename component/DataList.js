@@ -61,6 +61,7 @@ function DataList() {
               value={document}
               name={"subtitles"}
               type="numeric"
+              maxLength={8}
             />
           </View>
           <View>
@@ -71,6 +72,7 @@ function DataList() {
               value={registrationCode}
               name={"vpn-key"}
               type="numeric"
+              maxLength={6}
             />
           </View>
         </View>
