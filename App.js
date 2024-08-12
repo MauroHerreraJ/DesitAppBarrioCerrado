@@ -37,8 +37,8 @@ function Navigation() {
           tabBarIcon: ({ color, size }) => (<Ionicons name='home-outline' size={size} color={color} />),
           headerLeft: () => (
             <Image
-              source={require("./assets/logofondoblanco.png")}
-              style={{ width: 65, height: 65, marginLeft: 5 }}
+              source={require("./assets/logonuevo.png")}
+              style={{ width: 43, height: 43, marginLeft: 10 }}
             />
           ),
         }} />
@@ -109,7 +109,7 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="Config"
+              name="User"
               component={User}
               options={{
                 presentation: "modal",

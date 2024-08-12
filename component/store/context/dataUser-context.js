@@ -14,10 +14,7 @@ export const DataUserProvider = ({ children }) => {
     Documento: document ,
     Alta: registrationCode,
   };
-
-
-
-
+  
   return (
     <DataUserContext.Provider
       value={{

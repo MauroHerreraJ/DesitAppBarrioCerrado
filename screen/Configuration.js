@@ -10,7 +10,7 @@ function Configuration() {
     const navigation = useNavigation();
 
     function modalHandler() {
-        navigation.navigate("Config");
+        navigation.navigate("User");
 
     }
 

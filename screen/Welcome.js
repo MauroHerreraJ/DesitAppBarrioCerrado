@@ -25,7 +25,7 @@ function Welcome({ navigation }) {
                         </Pressable>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Image source={require("../assets/logodesit.png")}
+                        <Image source={require("../assets/logonuevo.png")}
                             style={{ width: 70, height: 70 }} />
                     </View>
                     <View>

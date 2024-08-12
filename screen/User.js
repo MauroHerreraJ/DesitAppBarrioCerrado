@@ -61,8 +61,8 @@ function User() {
         ))}
       </View>
       <View style={styles.imageContainer}>
-        <Image source={require("../assets/logodesit.png")}
-          style={{ width: 55, height: 55 }} />
+        <Image source={require("../assets/logonuevo.png")}
+          style={{ width: 59, height: 59 }} />
       </View>
       <View>
         <Text style={styles.textImage}>Producto desarrollado por Desit SA</Text>
