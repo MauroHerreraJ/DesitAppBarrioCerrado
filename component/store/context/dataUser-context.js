@@ -5,14 +5,14 @@ export const DataUserContext = createContext();
 
 // Crear el proveedor del contexto
 export const DataUserProvider = ({ children }) => {
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState(""); 
   const [document, setDocument] = useState("");
   const [registrationCode, setRegistrationCode] = useState("");
 
   const dataUser = {
     Usuario: userName,
     Documento: document ,
-    Alta: registrationCode,
+    Alta:registrationCode,
   };
   
   return (

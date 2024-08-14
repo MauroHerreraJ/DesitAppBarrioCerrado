@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from 'react-native';
 import { useFonts } from 'expo-font';
+import { DataProvider } from './component/store/context/serverData-context';
 import { DataUserProvider } from './component/store/context/dataUser-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
@@ -93,6 +94,7 @@ export default function App() {
   return (
     <>
       <StatusBar style='light' />
+      <DataProvider>
       <DataUserProvider>
         <NavigationContainer>
           <Stack.Navigator>
@@ -117,10 +119,15 @@ export default function App() {
                 headerStyle: { backgroundColor: '#0d47a1' },
                 headerTintColor: "white"
               }}
-            />
+              />
+              <Stack.Screen
+              name="Configuration"
+              component={Configuration}
+              />
           </Stack.Navigator>
         </NavigationContainer>
       </DataUserProvider>
+      </DataProvider>
     </>
   );
 }

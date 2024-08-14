@@ -1,20 +1,9 @@
-import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
-import { fetchData } from "../util/http";
+import { useData } from "../component/store/context/serverData-context";
 
 function User() {
 
-  const [fetchedData, setFetchedData] = useState([]);
-
-  useEffect(() => {
-    async function getData() {
-
-      const dataClient = await fetchData();
-      setFetchedData(dataClient);
-    }
-    getData();
-  }, []);
-  console.log(fetchedData)
+  const { fetchedData } = useData();
   return (
     <>
       <View style={styles.dataContainer} >
