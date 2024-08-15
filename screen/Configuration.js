@@ -12,6 +12,7 @@ function Configuration() {
     const {fetchedData} = useData();
    
     function modalHandler() {
+     
         if (fetchedData.length > 0) {
             navigation.navigate("User");
         } else {

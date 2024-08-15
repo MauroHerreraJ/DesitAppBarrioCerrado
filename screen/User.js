@@ -1,9 +1,11 @@
 import { Text, View, StyleSheet, Image } from "react-native";
 import { useData } from "../component/store/context/serverData-context";
 
+
 function User() {
 
   const { fetchedData } = useData();
+
   return (
     <>
       <View style={styles.dataContainer} >

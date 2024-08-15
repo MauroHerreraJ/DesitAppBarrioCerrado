@@ -14,7 +14,7 @@ export function DataProvider({ children }) {
       setFetchedData(dataClient);
     }
     getData();
-  }, []);
+  } );
 
   return (
     <DataContext.Provider value={{ fetchedData, setFetchedData }}>

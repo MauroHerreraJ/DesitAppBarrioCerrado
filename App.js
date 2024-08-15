@@ -94,8 +94,8 @@ export default function App() {
   return (
     <>
       <StatusBar style='light' />
-      <DataProvider>
       <DataUserProvider>
+      <DataProvider>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
@@ -126,8 +126,8 @@ export default function App() {
               />
           </Stack.Navigator>
         </NavigationContainer>
-      </DataUserProvider>
       </DataProvider>
+      </DataUserProvider>
     </>
   );
 }

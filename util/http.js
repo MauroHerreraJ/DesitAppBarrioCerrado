@@ -9,7 +9,7 @@ export function storeData(data){
 export async function fetchData(){
    const response = await axios.get(BACKEND_URL + '/data.json')
 
-   const dataClient = [];
+   const dataClient = []; 
    for(const key in response.data){
     const dataObj = {
         id:key,
