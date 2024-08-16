@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet, Platform, ImageBackground, Pressable } f
 function Welcome({ navigation }) {
 
     function pressHandler() {
-        navigation.navigate("Principal");
+        navigation.navigate("Configuration");
     }
     return (
         <>

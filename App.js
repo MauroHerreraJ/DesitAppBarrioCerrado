@@ -124,6 +124,10 @@ export default function App() {
               name="Configuration"
               component={Configuration}
               />
+              <Stack.Screen
+              name="Home"
+              component={AllButtons}
+              />
           </Stack.Navigator>
         </NavigationContainer>
       </DataProvider>

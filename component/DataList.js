@@ -36,7 +36,7 @@ function DataList() {
     setRegistrationCode("");
     storeData(dataUser);
     console.log(dataUser);
-    navigation.goBack();
+    navigation.navigate("Principal");
   }
 
 
