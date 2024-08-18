@@ -20,8 +20,7 @@ import welcome from './screen/Welcome';
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-function Navigation() {
-
+function AuthorizedNavigation() {
   return (
     <BottomTabs.Navigator
       screenOptions={{
@@ -29,6 +28,7 @@ function Navigation() {
         headerTintColor: "white",
 
       }}>
+
       <BottomTabs.Screen
         name='Desit'
         component={AllButtons}
@@ -43,6 +43,7 @@ function Navigation() {
             />
           ),
         }} />
+
       <BottomTabs.Screen
         name="Configuration"
         component={Configuration}
@@ -51,9 +52,43 @@ function Navigation() {
           tabBarIcon: ({ color, size }) => <Ionicons name='settings-outline' size={size} color={color} />
 
         }} />
+
+    </BottomTabs.Navigator>
+  );
+
+}
+
+function NoAuthorizedNavigation() {
+
+  return (
+    <BottomTabs.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#0d47a1' },
+        headerTintColor: "white",
+
+      }}>
+
+
+      <BottomTabs.Screen
+        name="Welcome"
+        component={welcome}
+        options={{headerShown:false}}
+      />
+
+      <BottomTabs.Screen
+        name="Configuration"
+        component={Configuration}
+        options={{
+          title: "Configuración",
+          tabBarIcon: ({ color, size }) => <Ionicons name='settings-outline' size={size} color={color} />
+
+        }} />
+
     </BottomTabs.Navigator>
   );
 }
+
+const Licencia = "Licencia"
 
 export default function App() {
 
@@ -90,49 +125,51 @@ export default function App() {
   }
 
 
-
   return (
     <>
       <StatusBar style='light' />
       <DataUserProvider>
-      <DataProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
+        <DataProvider>
+          <NavigationContainer>
+          
+            <Stack.Navigator initialRouteName={Licencia ? "Principal" : "Secondary"}>
+            
+              <Stack.Screen
+                name="Secondary"
+                component={NoAuthorizedNavigation}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Principal"
+                component={AuthorizedNavigation}
+                options={{ headerShown: false }}
+              />
+                <Stack.Screen
               name='Welcome'
               component={welcome}
-              options={{
-                headerShown: false,
-              }}
             />
-            <Stack.Screen
-              name="Principal"
-              component={Navigation}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="User"
-              component={User}
-              options={{
-                presentation: "modal",
-                title: "Información del Sistema",
-                headerStyle: { backgroundColor: '#0d47a1' },
-                headerTintColor: "white"
-              }}
+              <Stack.Screen
+                name="User"
+                component={User}
+                options={{
+                  presentation: "modal",
+                  title: "Información del Sistema",
+                  headerStyle: { backgroundColor: '#0d47a1' },
+                  headerTintColor: "white"
+                }}
               />
               <Stack.Screen
-              name="Configuration"
-              component={Configuration}
+                name="Configuration"
+                component={Configuration}
               />
               <Stack.Screen
-              name="Home"
-              component={AllButtons}
+                name="Home"
+                component={AllButtons}
               />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </DataProvider>
+            </Stack.Navigator>
+          </NavigationContainer>
+        </DataProvider>
       </DataUserProvider>
     </>
   );
 }
-

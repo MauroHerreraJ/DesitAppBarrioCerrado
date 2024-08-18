@@ -7,12 +7,12 @@ export const DataUserContext = createContext();
 export const DataUserProvider = ({ children }) => {
   const [userName, setUserName] = useState(""); 
   const [document, setDocument] = useState("");
-  const [registrationCode, setRegistrationCode] = useState("");
+  const [registrationCode, setRegistrationCode] = useState(""); 
 
   const dataUser = {
-    Usuario: userName,
-    Documento: document ,
-    Alta:registrationCode,
+    nombre: userName,
+    documento: document ,
+    codlicencia:registrationCode,
   };
   
   return (

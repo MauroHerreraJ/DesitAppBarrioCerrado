@@ -9,7 +9,7 @@ function TextImputClient({ text, onDattaChange, value,name,type,maxLength }) {
         setData(enteredText);
     }
 
-    useEffect(() => {
+    useEffect(() => { 
         onDattaChange(data);
     }, [data]);
 

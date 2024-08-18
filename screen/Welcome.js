@@ -18,7 +18,7 @@ function Welcome({ navigation }) {
                     </View>
                     <View style={styles.buttonContainer}>
                         <Pressable
-                            onPress={pressHandler}
+                            onPress={pressHandler} 
                             style={styles.button}
                         >
                             <Text style={styles.textButton}>Continuar</Text>
