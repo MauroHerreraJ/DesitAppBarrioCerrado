@@ -9,10 +9,12 @@ export const DataUserProvider = ({ children }) => {
   const [document, setDocument] = useState("");
   const [registrationCode, setRegistrationCode] = useState(""); 
 
-  const dataUser = {
+  const licencia = {
     nombre: userName,
     documento: document ,
     codlicencia:registrationCode,
+    asignada:"asignada"
+
   };
   
   return (
@@ -24,7 +26,7 @@ export const DataUserProvider = ({ children }) => {
         setDocument,
         registrationCode,
         setRegistrationCode,
-        dataUser,
+        licencia,
       }}
     >
       {children}

@@ -6,7 +6,7 @@ import { useData } from "../component/store/context/serverData-context";
 import { DataUserContext } from "../component/store/context/dataUser-context";
 import { storeData } from "../util/http";
 import { useState, useEffect, useContext } from "react";
-import { getLicenciaId } from "../util/Api";
+import { getLicenciaId,updateLicencia } from "../util/Api";
 
 import DataList from "../component/DataList";
 import IconButton from "../UI/IconButton";
@@ -26,7 +26,7 @@ function Configuration() {
         setDocument,
         registrationCode,
         setRegistrationCode,
-        dataUser,
+        licencia,
     } = useContext(DataUserContext);
 
     const [isButtonEnabled, setIsButtonEnabled] = useState(false)
@@ -38,14 +38,45 @@ function Configuration() {
         }
     }, [userName, document, registrationCode]);
 
-    function saveData() {
-        setUserName("");
-        setDocument("");
-        setRegistrationCode("");
-        storeData(dataUser);
-        console.log(dataUser);
-        navigation.navigate("Principal");
+    
+    async function handleSubmit () {
+    const res = await getLicenciaId(licencia.registrationCode)
+
+    if (res.data.length>0){
+        const Licencia = {
+            storagelicencia: res.data[0].codlincencia,
+            storageCuenta: res.data[0].cuenta,
+            storageCentral: res.data[0].central, 
+            storageAsignada: res.data[0].asignada,       
+            storagecodmovil: res.data[0].codmovil,
+            storageId: res.data[0]._id
+        }
+        
+        console.log(res.data[0]._id, licencia)
     }
+}
+
+
+
+
+function saveData(){
+    setUserName("");
+    setDocument("");
+    setRegistrationCode("");
+    console.log(licencia)
+    handleSubmit();
+    
+    }
+
+
+    // function saveData() {
+    //     setUserName("");
+    //     setDocument("");
+    //     setRegistrationCode("");
+    //     storeData(dataUser);
+    //     console.log(dataUser);
+    //     navigation.navigate("Principal");
+    // }
     // const saveData = async () => { 
     //     const res = await getLicenciaId(registrationCode.codlincencia);
     
