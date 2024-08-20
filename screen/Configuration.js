@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View,TouchableOpacity,Text } from "react-native";
 import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ImageBackground, StyleSheet } from "react-native";
@@ -6,7 +6,9 @@ import { useData } from "../component/store/context/serverData-context";
 import { DataUserContext } from "../component/store/context/dataUser-context";
 import { storeData } from "../util/http";
 import { useState, useEffect, useContext } from "react";
-import { getLicenciaId,updateLicencia } from "../util/Api";
+import { GlobalStyles } from "../constans/Colors";
+import { getLicenciaId, updateLicencia } from "../util/Api";
+
 
 import DataList from "../component/DataList";
 import IconButton from "../UI/IconButton";
@@ -26,7 +28,7 @@ function Configuration() {
         setDocument,
         registrationCode,
         setRegistrationCode,
-        licencia,
+        dataUser,
     } = useContext(DataUserContext);
 
     const [isButtonEnabled, setIsButtonEnabled] = useState(false)
@@ -38,71 +40,30 @@ function Configuration() {
         }
     }, [userName, document, registrationCode]);
 
-    
-    async function handleSubmit () {
-    const res = await getLicenciaId(licencia.registrationCode)
-
-    if (res.data.length>0){
-        const Licencia = {
-            storagelicencia: res.data[0].codlincencia,
-            storageCuenta: res.data[0].cuenta,
-            storageCentral: res.data[0].central, 
-            storageAsignada: res.data[0].asignada,       
-            storagecodmovil: res.data[0].codmovil,
-            storageId: res.data[0]._id
+    const storeDataAsync = async (value) => {
+        try {
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem('@dataUser', jsonValue); // Guarda bajo la clave '@dataUser'
+            console.log('Datos guardados correctamente en AsyncStorage');
+        } catch (e) {
+            console.log('Error al guardar en AsyncStorage', e);
         }
-        
-        console.log(res.data[0]._id, licencia)
+    };
+    
+  
+
+    function saveData() {
+        setUserName("");
+        setDocument("");
+        setRegistrationCode("");
+        storeDataAsync(dataUser)
+        storeData(dataUser);
+        console.log(dataUser);
+        navigation.navigate("Principal");
     }
-}
+  
 
 
-
-
-function saveData(){
-    setUserName("");
-    setDocument("");
-    setRegistrationCode("");
-    console.log(licencia)
-    handleSubmit();
-    
-    }
-
-
-    // function saveData() {
-    //     setUserName("");
-    //     setDocument("");
-    //     setRegistrationCode("");
-    //     storeData(dataUser);
-    //     console.log(dataUser);
-    //     navigation.navigate("Principal");
-    // }
-    // const saveData = async () => { 
-    //     const res = await getLicenciaId(registrationCode.codlincencia);
-    
-    //     if (res.data.length > 0) {
-    //       const Licencia = {
-    //         storagelicencia: res.data[0].codlincencia,
-    //         storageCuenta: res.data[0].cuenta,
-    //         storageCentral: res.data[0].central, 
-    //         storageAsignada: res.data[0].asignada,       
-    //         storagecodmovil: res.data[0].codmovil,
-    //         storageId: res.data[0]._id
-    //       }  
-    //       await AsyncStorage.setItem("LicenciaSave", JSON.stringify(Licencia));
-    //       //console.log(res.data[0]._id, licencias)
-    //       await updateLicencia(res.data[0]._id, registrationCode) 
-    //       navigation.replace('Principal')      
-    //     } else {
-    //         console.log('CONFIGU', res.data)
-    //     }   
-        
-    //   }  
-      
-     
-    
-    
-    
     function modalHandler() {
 
         if (fetchedData.length > 0) {
@@ -121,6 +82,13 @@ function saveData(){
         });
     }, [navigation, modalHandler]);
 
+    const Borrar = async () => {
+        await AsyncStorage.removeItem('@dataUser')
+        dispatch(authMode(false));  
+        console.log('borrado')
+        }    
+    
+
     return (
         <ImageBackground
             source={require('../assets/126353.jpg')}
@@ -128,9 +96,15 @@ function saveData(){
             style={styles.rootScreen}
         >
             <DataList setUserName={setUserName} setDocument={setDocument} setRegistrationCode={setRegistrationCode} userName={userName} document={document} registrationCode={registrationCode} />
+            <View style={styles.buttonContainer1}>
+            <TouchableOpacity style={styles.buttonUpdateI} onPress={Borrar}>
+            <Text>Borrar</Text>
+            </TouchableOpacity>
+        </View>
             <View style={styles.buttonContainer}>
                 <SaveButton onPress={saveData} isEnabled={isButtonEnabled} />
             </View>
+            
         </ImageBackground>
     );
 }
@@ -143,4 +117,18 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 210,
     },
+    buttonUpdateI: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderRadius: 5,
+        marginTop: 30,      
+        backgroundColor: GlobalStyles.colors.inputcontainer,
+        width: 120,
+        alignContent: 'center'
+      },
+      buttonContainer: {            
+        marginHorizontal: 1,
+        marginTop: 130,
+      },
+    
 })

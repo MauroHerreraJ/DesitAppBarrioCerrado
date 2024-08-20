@@ -9,6 +9,7 @@ import { DataProvider } from './component/store/context/serverData-context';
 import { DataUserProvider } from './component/store/context/dataUser-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import AllButtons from './screen/AllButtons';
@@ -72,7 +73,9 @@ function NoAuthorizedNavigation() {
       <BottomTabs.Screen
         name="Welcome"
         component={welcome}
-        options={{headerShown:false}}
+        options={{headerShown:false,
+          tabBarIcon:({color,size})=> <Ionicons name='home-outline' size={size} color={color}/>
+        }}
       />
 
       <BottomTabs.Screen
@@ -88,7 +91,7 @@ function NoAuthorizedNavigation() {
   );
 }
 
-const Licencia = "Licencia"
+const Licencia = ""
 
 export default function App() {
 
@@ -98,6 +101,7 @@ export default function App() {
   });
 
   const [appIsReady, setAppIsReady] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
     async function prepare() {
@@ -105,6 +109,11 @@ export default function App() {
         await SplashScreen.preventAutoHideAsync();
         // Preload fonts or any other task
         await new Promise(resolve => setTimeout(resolve, 2000));
+        const data = await AsyncStorage.getItem('@dataUser');
+        if (data !== null) {
+          setIsAuthorized(true); // Usuario ya configurado
+        }
+
       } catch (e) {
         console.warn(e);
       } finally {
@@ -132,7 +141,7 @@ export default function App() {
         <DataProvider>
           <NavigationContainer>
           
-            <Stack.Navigator initialRouteName={Licencia ? "Principal" : "Secondary"}>
+            <Stack.Navigator initialRouteName={isAuthorized ? "Principal" : "Secondary"}>
             
               <Stack.Screen
                 name="Secondary"

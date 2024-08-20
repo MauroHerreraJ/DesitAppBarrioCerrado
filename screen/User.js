@@ -15,7 +15,7 @@ function User() {
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Usuario: </Text>
                 <Text style={styles.textData}>{item.Usuario}</Text>
-                <View style={styles.underline}></View>
+                <View style={styles.underline}></View> 
               </View>
 
               <View style={styles.textContainer}>

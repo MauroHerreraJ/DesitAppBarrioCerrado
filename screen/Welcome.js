@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         marginTop: 80
     },
     buttonContainer: {
-        marginTop: 300
+        marginTop: 290
     },
     button: {
         padding: 16,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
    imageContainer:{
     alignItems:"center",
-    marginTop:130,
+    marginTop:90,
     marginBottom:5
    },
    textImage: {
