@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from 'react-native';
 import { useFonts } from 'expo-font';
-import { DataProvider } from './component/store/context/serverData-context';
-import { DataUserProvider } from './component/store/context/dataUser-context';
+import { DataProvider } from './store/serverData-context';
+import { DataUserProvider } from './store/dataUser-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -69,11 +69,12 @@ function NoAuthorizedNavigation() {
 
       }}>
 
-
       <BottomTabs.Screen
         name="Welcome"
         component={welcome}
+        
         options={{headerShown:false,
+          tabBarStyle: { display: 'none' },
           tabBarIcon:({color,size})=> <Ionicons name='home-outline' size={size} color={color}/>
         }}
       />
@@ -109,7 +110,7 @@ export default function App() {
         await SplashScreen.preventAutoHideAsync();
         // Preload fonts or any other task
         await new Promise(resolve => setTimeout(resolve, 2000));
-        const data = await AsyncStorage.getItem('@dataUser');
+        const data = await AsyncStorage.getItem('@licencias');
         if (data !== null) {
           setIsAuthorized(true); // Usuario ya configurado
         }

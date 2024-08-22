@@ -5,18 +5,19 @@ export const DataUserContext = createContext();
 
 // Crear el proveedor del contexto
 export const DataUserProvider = ({ children }) => {
-  const [userName, setUserName] = useState(""); 
+  const [userName, setUserName] = useState("");
   const [document, setDocument] = useState("");
-  const [registrationCode, setRegistrationCode] = useState(""); 
+  const [registrationCode, setRegistrationCode] = useState("");
 
-  const dataUser = {
-    Usuario: userName,
-    Documento: document ,
-    Alta:registrationCode,
-    
+  const licencias = [
+    { nombre: userName },
+    { documento: document },
+    { codlicencia: registrationCode },
+    { asignada: "asignada" }
+  ]
 
-  };
-  
+
+
   return (
     <DataUserContext.Provider
       value={{
@@ -26,7 +27,7 @@ export const DataUserProvider = ({ children }) => {
         setDocument,
         registrationCode,
         setRegistrationCode,
-        dataUser,
+        licencias,
       }}
     >
       {children}

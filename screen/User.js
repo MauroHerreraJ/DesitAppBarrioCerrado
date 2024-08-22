@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Image } from "react-native";
-import { useData } from "../component/store/context/serverData-context";
+import { useData } from "../store/serverData-context";
 
 
 function User() {
@@ -14,19 +14,19 @@ function User() {
             <>
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Usuario: </Text>
-                <Text style={styles.textData}>{item.Usuario}</Text>
+                <Text style={styles.textData}>{item.nombre}</Text>
                 <View style={styles.underline}></View> 
               </View>
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Documento: </Text>
-                <Text style={styles.textData}>{item.Documento}</Text>
+                <Text style={styles.textData}>{item.documento}</Text>
                 <View style={styles.underline}></View>
               </View>
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Código de Alta: </Text>
-                <Text style={styles.textData}>{item.Alta}</Text>
+                <Text style={styles.textData}>{item.codlicencia}</Text>
                 <View style={styles.underline}></View>
               </View>
 

@@ -2,8 +2,8 @@ import { View,TouchableOpacity,Text } from "react-native";
 import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ImageBackground, StyleSheet } from "react-native";
-import { useData } from "../component/store/context/serverData-context";
-import { DataUserContext } from "../component/store/context/dataUser-context";
+import { useData } from "../store/serverData-context";
+import { DataUserContext } from "../store/dataUser-context";
 import { storeData } from "../util/http";
 import { useState, useEffect, useContext } from "react";
 import { GlobalStyles } from "../constans/Colors";
@@ -28,7 +28,7 @@ function Configuration() {
         setDocument,
         registrationCode,
         setRegistrationCode,
-        dataUser,
+        licencias,
     } = useContext(DataUserContext);
 
     const [isButtonEnabled, setIsButtonEnabled] = useState(false)
@@ -40,10 +40,28 @@ function Configuration() {
         }
     }, [userName, document, registrationCode]);
 
+    const handleSubmit = async () => { 
+        const res = await getLicenciaId(licencias.registrationCode);
+        if (res.data.length > 0) {
+            const Licencia = {
+              storagelicencia: res.data[0].codlincencia,
+              storageCuenta: res.data[0].cuenta,
+              storageCentral: res.data[0].central, 
+              storageAsignada: res.data[0].asignada,       
+              storagecodmovil: res.data[0].codmovil,
+              storageId: res.data[0]._id
+            }  
+
+            await updateLicencia(res.data[0]._id, licencias)
+
+        }else{console.log("No se encuentran datos")}
+    
+    }
+
     const storeDataAsync = async (value) => {
         try {
             const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem('@dataUser', jsonValue); // Guarda bajo la clave '@dataUser'
+            await AsyncStorage.setItem('@licencias', jsonValue); // Guarda bajo la clave '@dataUser'
             console.log('Datos guardados correctamente en AsyncStorage');
         } catch (e) {
             console.log('Error al guardar en AsyncStorage', e);
@@ -56,10 +74,11 @@ function Configuration() {
         setUserName("");
         setDocument("");
         setRegistrationCode("");
-        storeDataAsync(dataUser)
-        storeData(dataUser);
-        console.log(dataUser);
-        navigation.navigate("Principal");
+        handleSubmit();
+        //storeDataAsync(licencias)
+        //storeData(licencias);
+        console.log(licencias);
+       //navigation.navigate("Principal");
     }
   
 
@@ -83,7 +102,7 @@ function Configuration() {
     }, [navigation, modalHandler]);
 
     const Borrar = async () => {
-        await AsyncStorage.removeItem('@dataUser')
+        await AsyncStorage.removeItem('@licencias')
         dispatch(authMode(false));  
         console.log('borrado')
         }    
