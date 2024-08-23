@@ -20,7 +20,7 @@ function TextImputClient({ text, onDattaChange, value,name,type,maxLength }) {
                 placeholder={text}
                 onChangeText={InputHandler}
                 keyboardType={type}
-                value={value}
+                value={licencias}
                 maxLength={maxLength}
             />
             <MaterialIcons name={name} size={24} color="#000" style={styles.icon} />

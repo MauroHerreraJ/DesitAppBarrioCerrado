@@ -1,21 +1,51 @@
-import { View, StyleSheet, ImageBackground } from "react-native";
+import { View, StyleSheet, ImageBackground,Vibration } from "react-native";
 import { styles1 } from "../constans/Styles";
 import { styles2 } from "../constans/Styles";
+import { savePost } from "../util/Api";
 
 import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
 
 function AllButtons() {
 
-    function primaryButton() {
-        console.log("Pánico")
-    }
-    function fireButton() {
+    const cuentaStore = 1
+    let evento = '120'
+    let evecuenta = cuentaStore 
+    let detalle = 'Panico'
+    let critico = '1'
+    var panico = {
+      evento: evento,
+      evecuenta: evecuenta,    
+      detalle: detalle,
+      critico:  critico
+      }
+
+      const primaryButton = async () => {
+        try {      
+          Vibration.vibrate(500),
+                  
+          savePost(
+            {
+              evento: evento,
+              evecuenta: evecuenta,      
+              detalle: detalle,
+              critico:  critico
+            }
+          )        
+        } catch (error) {
+          console.log(error);
+      };}      
+
+
+      function fireButton() {
         console.log("Fuego")
     }
     function medicButton() {
         console.log("Medico")
     }
+  
+
+ 
 
     return (
         <>

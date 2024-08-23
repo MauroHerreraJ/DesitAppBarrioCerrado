@@ -5,8 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from 'react-native';
 import { useFonts } from 'expo-font';
-import { DataProvider } from './store/serverData-context';
-import { DataUserProvider } from './store/dataUser-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -138,10 +136,9 @@ export default function App() {
   return (
     <>
       <StatusBar style='light' />
-      <DataUserProvider>
-        <DataProvider>
+      
+       
           <NavigationContainer>
-          
             <Stack.Navigator initialRouteName={isAuthorized ? "Principal" : "Secondary"}>
             
               <Stack.Screen
@@ -178,8 +175,7 @@ export default function App() {
               />
             </Stack.Navigator>
           </NavigationContainer>
-        </DataProvider>
-      </DataUserProvider>
+         
     </>
   );
 }
