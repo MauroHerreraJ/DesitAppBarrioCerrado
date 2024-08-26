@@ -12,6 +12,7 @@ import SaveButton from "../component/SaveButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
+
 function Configuration() {
 
     const navigation = useNavigation();
@@ -49,13 +50,16 @@ function Configuration() {
                 storageCentral: res.data[0].central,
                 storageAsignada: res.data[0].asignada,
                 storagecodmovil: res.data[0].codmovil,
+                storageNombre:res.data[0].nombre,
+                storageDocumento:res.data[0].documento,
                 storageId: res.data[0]._id
+
             }
 
             await AsyncStorage.setItem('@licencias', JSON.stringify(Licencia));
             console.log("Datos Guardados")
 
-            await updateLicencia(res.data[0]._id, licencias)
+            await updateLicencia(res.data[0]._id,licencias)
             navigation.replace('Principal')  
 
         } else { console.log("No se encuentran datos") }
@@ -69,12 +73,8 @@ function Configuration() {
     }
 
     function modalHandler() {
-
-        if (fetchedData.length > 0) {
             navigation.navigate("User");
-        } else {
-            alert('No hay datos disponibles aún.');
-        }
+     
     }
     useLayoutEffect(() => {
         navigation.setOptions({

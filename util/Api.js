@@ -6,7 +6,7 @@ import axios from 'axios';
 const API = "https://dashdesit-e4022df63ef8.herokuapp.com/api/licencia";
 const APIG = "https://dashdesit-e4022df63ef8.herokuapp.com/api/licenciaCod/";
 const APU = "https://dashdesit-e4022df63ef8.herokuapp.com/api/licencia";
-const APIH = "https://dashdesit-e4022df63ef8.herokuapp.com/api/history";
+const APIH = "https://dashdesit-e4022df63ef8.herokuapp.com/api/history"; 
  
 export const getLicencia = async () => (await axios.get(`${API}`)
                                     .catch(error => console.log(error)));

@@ -9,43 +9,54 @@ import SecondaryButton from "../component/SecondaryButton";
 function AllButtons() {
 
     const cuentaStore = 1
-    let evento = '120'
-    let evecuenta = cuentaStore 
-    let detalle = 'Panico'
-    let critico = '1'
-    var panico = {
-      evento: evento,
-      evecuenta: evecuenta,    
-      detalle: detalle,
-      critico:  critico
-      }
-
+   
       const primaryButton = async () => {
         try {      
           Vibration.vibrate(500),
                   
           savePost(
             {
-              evento: evento,
-              evecuenta: evecuenta,      
-              detalle: detalle,
-              critico:  critico
+              evento: "120",
+              evecuenta: cuentaStore,      
+              detalle: "Pánico",
+              critico:  "1"
+            }
+          )        
+        } catch (error) {
+          console.log(error);
+      };} 
+      
+      const fireButton = async () => {
+        try {      
+          Vibration.vibrate(500),
+                  
+          savePost(
+            {
+              evento: "130",
+              evecuenta: cuentaStore,      
+              detalle: "Incendio",
+              critico:  "1"
             }
           )        
         } catch (error) {
           console.log(error);
       };}      
 
-
-      function fireButton() {
-        console.log("Fuego")
-    }
-    function medicButton() {
-        console.log("Medico")
-    }
-  
-
- 
+      const medicButton = async () => {
+        try {      
+          Vibration.vibrate(500),
+                  
+          savePost(
+            {
+              evento: "140",
+              evecuenta: cuentaStore,      
+              detalle: "Médico",
+              critico:  "1"
+            }
+          )        
+        } catch (error) {
+          console.log(error);
+      };}      
 
     return (
         <>

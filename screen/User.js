@@ -1,65 +1,78 @@
 import { Text, View, StyleSheet, Image } from "react-native";
-import { useData } from "../store/serverData-context";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 
 function User() {
+  const [licencia, setLicencia] = useState(null);
 
-  const { fetchedData } = useData();
+  // Función para recuperar la licencia almacenada
+  const loadLicencia = async () => {
+    try {
+      const storedLicencia = await AsyncStorage.getItem('@licencias');
+      if (storedLicencia) {
+        setLicencia(JSON.parse(storedLicencia));
+        console.log(storedLicencia)
+      }
+    } catch (error) {
+      console.log("Error al cargar la licencia", error);
+    }
+  };
+
+  // Ejecuta la función cuando se monta el componente
+  useEffect(() => {
+    loadLicencia();
+  }, []);
+
+  // Verifica si hay datos de licencia para mostrar
+  if (!licencia) {
+    return <Text>Cargando datos...</Text>;
+  }
 
   return (
     <>
-      <View style={styles.dataContainer} >
-        {fetchedData.map((item) => (
-          <View key={item.id}>
-            <>
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>Usuario: </Text>
-                <Text style={styles.textData}>{item.nombre}</Text>
-                <View style={styles.underline}></View> 
-              </View>
-
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>Documento: </Text>
-                <Text style={styles.textData}>{item.documento}</Text>
-                <View style={styles.underline}></View>
-              </View>
-
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>Código de Alta: </Text>
-                <Text style={styles.textData}>{item.codlicencia}</Text>
-                <View style={styles.underline}></View>
-              </View>
-
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>Licencia: </Text>
-                <Text style={styles.textData}>{item.Licencia}</Text>
-                <View style={styles.underline}></View>
-              </View>
-
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>Central: </Text>
-                <Text style={styles.textData}>{item.Central}</Text>
-                <View style={styles.underline}></View>
-              </View>
-
-              <View style={styles.textContainer}>
-                <Text style={styles.text}>Cuenta: </Text>
-                <Text style={styles.textData}>{item.Cuenta}</Text>
-                <View style={styles.underline}></View>
-              </View>
-            </>
+      <View style={styles.dataContainer}>
+        <View>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>Usuario: </Text>
+            <Text style={styles.textData}>{licencia.storageNombre}</Text>
+            <View style={styles.underline}></View>
           </View>
-        ))}
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>Documento: </Text>
+            <Text style={styles.textData}>{licencia.storageDocumento}</Text>
+            <View style={styles.underline}></View>
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>Código de Alta: </Text>
+            <Text style={styles.textData}>{licencia.storagelicencia}</Text>
+            <View style={styles.underline}></View>
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>Licencia: </Text>
+            <Text style={styles.textData}>{licencia.storagecodmovil}</Text>
+            <View style={styles.underline}></View>
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>Central: </Text>
+            <Text style={styles.textData}>{licencia.storageCentral}</Text>
+            <View style={styles.underline}></View>
+          </View>
+        </View>
       </View>
+
       <View style={styles.imageContainer}>
         <Image source={require("../assets/logonuevo.png")}
           style={{ width: 59, height: 59 }} />
       </View>
+
       <View>
         <Text style={styles.textImage}>Producto desarrollado por Desit SA</Text>
       </View>
     </>
-
   );
 }
 
@@ -80,9 +93,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "open-sans-bold",
   },
-  rootScreen: {
-    flex: 1
-  },
   textData: {
     fontSize: 18,
     fontFamily: "open-sans",
@@ -98,8 +108,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     fontSize: 15
-  }, imageContainer: {
+  }, 
+  imageContainer: {
     alignItems: "center",
     marginBottom: 20
   }
-})
+});

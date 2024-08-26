@@ -81,6 +81,7 @@ function NoAuthorizedNavigation() {
         name="Configuration"
         component={Configuration}
         options={{
+          tabBarStyle: { display: 'none' },
           title: "Configuración",
           tabBarIcon: ({ color, size }) => <Ionicons name='settings-outline' size={size} color={color} />
 
@@ -90,7 +91,7 @@ function NoAuthorizedNavigation() {
   );
 }
 
-const Licencia = ""
+
 
 export default function App() {
 
