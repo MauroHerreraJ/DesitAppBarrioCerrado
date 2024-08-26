@@ -25,7 +25,7 @@ function User() {
 
   // Verifica si hay datos de licencia para mostrar
   if (!licencia) {
-    return <Text>Cargando datos...</Text>;
+    return <Text>No posee Licencia...</Text>;
   }
 
   return (

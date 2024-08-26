@@ -50,31 +50,35 @@ function Configuration() {
                 storageCentral: res.data[0].central,
                 storageAsignada: res.data[0].asignada,
                 storagecodmovil: res.data[0].codmovil,
-                storageNombre:res.data[0].nombre,
-                storageDocumento:res.data[0].documento,
+                storageNombre: res.data[0].nombre,
+                storageDocumento: res.data[0].documento,
                 storageId: res.data[0]._id
-
             }
 
-            await AsyncStorage.setItem('@licencias', JSON.stringify(Licencia));
-            console.log("Datos Guardados")
+            if (res.data[0].asignada === 'asignada') {
+                alert('La icencia se encuentra asignada');
+            }
 
-            await updateLicencia(res.data[0]._id,licencias)
-            navigation.replace('Principal')  
+            else {
+                await AsyncStorage.setItem('@licencias', JSON.stringify(Licencia));
+                console.log("Datos Guardados")
+
+                await updateLicencia(res.data[0]._id, licencias)
+                navigation.replace('Principal')
+            }
 
         } else { console.log("No se encuentran datos") }
-
     }
 
-  
+
     function saveData() {
         handleSubmit();
-        console.log(licencias)   
+        console.log(licencias)
     }
 
     function modalHandler() {
-            navigation.navigate("User");
-     
+        navigation.navigate("User");
+
     }
     useLayoutEffect(() => {
         navigation.setOptions({
