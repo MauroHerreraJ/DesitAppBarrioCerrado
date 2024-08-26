@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, TextInput } from "react-native";
+import { View, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, TextInput,ActivityIndicator } from "react-native";
 import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ImageBackground, StyleSheet } from "react-native";
@@ -31,77 +31,78 @@ function Configuration() {
     //         setIsButtonEnabled(false);
     //     }
     // }, [licencias]);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const handleChange = (name, value) => {
         setLicencias({ ...licencias, [name]: value });
     }
 
-
     const handleSubmit = async () => {
-        const res = await getLicenciaId(licencias.codlincencia);
+        setIsLoading(true); // Mostrar el ActivityIndicator al iniciar la carga
 
-        //   console.log('CONF res', res.data)
+        try {
+            const res = await getLicenciaId(licencias.codlincencia);
+            if (res.data.length > 0) {
+                const Licencia = {
+                    storagelicencia: res.data[0].codlincencia,
+                    storageCuenta: res.data[0].cuenta,
+                    storageCentral: res.data[0].central,
+                    storageAsignada: res.data[0].asignada,
+                    storagecodmovil: res.data[0].codmovil,
+                    storageNombre: res.data[0].nombre,
+                    storageDocumento: res.data[0].documento,
+                    storageId: res.data[0]._id
+                };
 
-        if (res.data.length > 0) {
-            const Licencia = {
-                storagelicencia: res.data[0].codlincencia,
-                storageCuenta: res.data[0].cuenta,
-                storageCentral: res.data[0].central,
-                storageAsignada: res.data[0].asignada,
-                storagecodmovil: res.data[0].codmovil,
-                storageNombre: res.data[0].nombre,
-                storageDocumento: res.data[0].documento,
-                storageId: res.data[0]._id
+                if (res.data[0].asignada === 'asignada') {
+                    alert('La licencia que intenta utilizar se encuentra asignada a otro usuario');
+                } else {
+                    await AsyncStorage.setItem('@licencias', JSON.stringify(Licencia));
+                    console.log("Datos Guardados");
+
+                    await updateLicencia(res.data[0]._id, licencias);
+                    navigation.replace('Principal');
+                }
+            } else {
+                console.log("No se encuentran datos");
             }
-
-            if (res.data[0].asignada === 'asignada') {
-                alert('La icencia se encuentra asignada');
-            }
-
-            else {
-                await AsyncStorage.setItem('@licencias', JSON.stringify(Licencia));
-                console.log("Datos Guardados")
-
-                await updateLicencia(res.data[0]._id, licencias)
-                navigation.replace('Principal')
-            }
-
-        } else { console.log("No se encuentran datos") }
-    }
-
+        } catch (error) {
+            console.error("Error al cargar los datos", error);
+        } finally {
+            setIsLoading(false); // Ocultar el ActivityIndicator al finalizar la carga
+        }
+    };
 
     function saveData() {
         handleSubmit();
-        console.log(licencias)
+        console.log(licencias);
     }
 
     function modalHandler() {
         navigation.navigate("User");
-
     }
+
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => {
-                return <>
-                    <IconButton title="Tap me" onPress={modalHandler} />
-                </>
-            }
+            headerRight: () => <IconButton title="Tap me" onPress={modalHandler} />
         });
     }, [navigation, modalHandler]);
 
     const Borrar = async () => {
-        await AsyncStorage.removeItem('@licencias')
-        dispatch(authMode(false));
-        console.log('borrado')
-    }
+        await AsyncStorage.removeItem('@licencias');
+        console.log('borrado');
+    };
+
 
     return (
-        <ImageBackground
-            source={require('../assets/126353.jpg')}
-            resizeMode="cover"
-            style={styles.rootScreen}
-        >
+        <ImageBackground source={require('../assets/126353.jpg')} resizeMode="cover" style={styles.rootScreen}>
+            {isLoading ? ( // Mostrar el ActivityIndicator si isLoading es true
+                <View style={styles.containerActivity}>
+                <ActivityIndicator size="large" color="#ffffff" />
+                </View>
+            ) : (
+
             <>
                 <View style={styles.imputContainer}>
                     <View>
@@ -157,6 +158,7 @@ function Configuration() {
                     <SaveButton onPress={saveData} />
                 </View>
             </>
+            )}
         </ImageBackground>
     );
 }
@@ -215,6 +217,9 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight: 10,
-    }
-
+    },
+    containerActivity: {
+        flex: 1,
+        justifyContent: 'center',
+      },     
 })
