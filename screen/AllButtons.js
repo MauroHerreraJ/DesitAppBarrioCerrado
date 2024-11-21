@@ -1,4 +1,4 @@
-import { View, StyleSheet, ImageBackground,Vibration } from "react-native";
+import { View, StyleSheet, ImageBackground,Vibration,TouchableOpacity,Image} from "react-native";
 import { styles1 } from "../constans/Styles";
 import { styles2 } from "../constans/Styles";
 import { savePost } from "../util/Api";
@@ -59,32 +59,30 @@ function AllButtons() {
       };}      
 
     return (
-        <>
-            <ImageBackground
-                source={require('../assets/126353.jpg')}
-                resizeMode="cover"
-                style={styles.rootScreen}>
-                <View style={styles.seconButtonContainer}>
-                    <SecondaryButton onPress={fireButton} name={"local-fire-department"} styles={styles1.buttonContainer}
-                        text={"Alerta"}
-                        text2={"Incendio"} />
-                    <SecondaryButton onPress={medicButton} name={"local-hospital"} styles={styles2.buttonContainer}
-                        text={"Emergencia"}
-                        text2={"Médica"} />
-                </View>
-                <View style={styles.primaryButtonContainer}>
-                    <PrimaryButton onPress={primaryButton} />
-                </View>
-            </ImageBackground>
-        </>
+      <>
+      <ImageBackground
+          source={require('../assets/126353.jpg')}
+          resizeMode="cover"
+          style={styles.rootScreen}>
+         
+          <View style={styles.container}>
+          <TouchableOpacity onPress={primaryButton}>
+        <Image
+          source={require('../assets/botonpanico.png')} // URL de la imagen
+          style={styles.buttonImage}
+        />
+      </TouchableOpacity>
+          </View>
+      </ImageBackground>
+  </>
+      
     );
 }
 export default AllButtons;
 
 const styles = StyleSheet.create({
-    primaryButtonContainer: {
-        flex: 0.8
-    },
+  
+    
     seconButtonContainer: {
         flex: 1,
         flexDirection: "row",
@@ -93,5 +91,17 @@ const styles = StyleSheet.create({
     },
     rootScreen: {
         flex: 1
-    }
+    },
+    buttonImage: {
+      marginTop:100,
+      alignItems:"center",
+      width: 350, // Ajusta el ancho de la imagen
+      height: 350, // Ajusta la altura de la imagen
+      borderRadius: 10, // Opcional: hace las esquinas redondeadas
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 })

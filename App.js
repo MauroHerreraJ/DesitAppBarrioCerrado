@@ -23,7 +23,7 @@ function AuthorizedNavigation() {
   return (
     <BottomTabs.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: '#0d47a1' },
+        headerStyle: { backgroundColor: '#0d47a1', height: 120 },
         headerTintColor: "white",
 
       }}>
