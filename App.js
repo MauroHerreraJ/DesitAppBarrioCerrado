@@ -44,10 +44,10 @@ function AuthorizedNavigation() {
         }} />
 
       <BottomTabs.Screen
-        name="Configuration"
-        component={Configuration}
+        name="User"
+        component={User}
         options={{
-          title: "Configuración",
+          title: "Sistema",
           tabBarIcon: ({ color, size }) => <Ionicons name='settings-outline' size={size} color={color} />
 
         }} />

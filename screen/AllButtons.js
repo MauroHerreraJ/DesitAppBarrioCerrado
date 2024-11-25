@@ -1,10 +1,5 @@
 import { View, StyleSheet, ImageBackground,Vibration,TouchableOpacity,Image} from "react-native";
-import { styles1 } from "../constans/Styles";
-import { styles2 } from "../constans/Styles";
 import { savePost } from "../util/Api";
-
-import PrimaryButton from "../component/PrimaryButton";
-import SecondaryButton from "../component/SecondaryButton";
 
 function AllButtons() {
 
@@ -25,39 +20,7 @@ function AllButtons() {
         } catch (error) {
           console.log(error);
       };} 
-      
-      const fireButton = async () => {
-        try {      
-          Vibration.vibrate(500),
-                  
-          savePost(
-            {
-              evento: "130",
-              evecuenta: cuentaStore,      
-              detalle: "Incendio",
-              critico:  "1"
-            }
-          )        
-        } catch (error) {
-          console.log(error);
-      };}      
-
-      const medicButton = async () => {
-        try {      
-          Vibration.vibrate(500),
-                  
-          savePost(
-            {
-              evento: "140",
-              evecuenta: cuentaStore,      
-              detalle: "Médico",
-              critico:  "1"
-            }
-          )        
-        } catch (error) {
-          console.log(error);
-      };}      
-
+    
     return (
       <>
       <ImageBackground

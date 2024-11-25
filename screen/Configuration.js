@@ -1,36 +1,53 @@
-import { View, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, TextInput,ActivityIndicator } from "react-native";
-import { useLayoutEffect } from "react";
+import { View, Text, TextInput, ActivityIndicator, Platform, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { ImageBackground, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
-import { GlobalStyles } from "../constans/Colors";
-import { getLicenciaId, updateLicencia } from "../util/Api";
+import { postUserData } from "../util/Api";
 import { MaterialIcons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import IconButton from "../UI/IconButton";
 import SaveButton from "../component/SaveButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 
 
 function Configuration() {
 
     const navigation = useNavigation();
     const [licencias, setLicencias] = useState({
-        documento: '',
-        nombre: '',
-        codlincencia: '',
-        asignada: 'asignada',
+        panicAppCode: "",
+        targetDeviceCode: "",
+        accountNumber: "",
+        Nombre: "",
+        Apellido: "",
+        Documento: "",
+        Direccion: "",
+        Barrio: ""
+    });
+
+    const [currentStep, setCurrentStep] = useState(1);
+    const [result, setResult] = useState(null)
+    const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+    const [isContinueButtonEnabled,setContinueButtonEnabled] = useState(false)
+
+    useEffect(()=>{
+        if(licencias.panicAppCode && licencias.targetDeviceCode && licencias.accountNumber){
+            setContinueButtonEnabled(true)
+        } else {
+            setContinueButtonEnabled(false)
+        }
     })
 
-    // const [isButtonEnabled, setIsButtonEnabled] = useState(false)
-    // useEffect(() => {
-    //     if (licencias.length > 0 ) {
-    //         setIsButtonEnabled(true);
-    //     } else {
-    //         setIsButtonEnabled(false);
-    //     }
-    // }, [licencias]);
+    useEffect(() => {
+        if (licencias.Nombre && licencias.Apellido && licencias.Documento && licencias.Direccion && licencias.Barrio) {
+            setIsButtonEnabled(true);
+        } else {
+            setIsButtonEnabled(false);
+        }
+    }, [licencias]);
+
+   
+
+
     const [isLoading, setIsLoading] = useState(false);
 
 
@@ -38,178 +55,258 @@ function Configuration() {
         setLicencias({ ...licencias, [name]: value });
     }
 
-    const handleSubmit = async () => {
-        setIsLoading(true); // Mostrar el ActivityIndicator al iniciar la carga
-
-        try {
-            const res = await getLicenciaId(licencias.codlincencia);
-            if (res.data.length > 0) {
-                const Licencia = {
-                    storagelicencia: res.data[0].codlincencia,
-                    storageCuenta: res.data[0].cuenta,
-                    storageCentral: res.data[0].central,
-                    storageAsignada: res.data[0].asignada,
-                    storagecodmovil: res.data[0].codmovil,
-                    storageNombre: res.data[0].nombre,
-                    storageDocumento: res.data[0].documento,
-                    storageId: res.data[0]._id
-                };
-
-                if (res.data[0].asignada === 'asignada') {
-                    alert('La licencia que intenta utilizar se encuentra asignada a otro usuario');
-                } else {
-                    await AsyncStorage.setItem('@licencias', JSON.stringify(Licencia));
-                    console.log("Datos Guardados");
-
-                    await updateLicencia(res.data[0]._id, licencias);
-                    navigation.replace('Principal');
+    const saveData = async () => {
+        // Construir el array que espera el servidor
+        const data = {
+            panicAppCode: licencias.panicAppCode,
+            targetDeviceCode: licencias.targetDeviceCode,
+            accountNumber: licencias.accountNumber,
+            userCustomFields: [
+                {
+                    Nombre: licencias.Nombre
+                },
+                {
+                    Apellido: licencias.Apellido
+                },
+                {
+                    Documento: licencias.Documento
+                },
+                {
+                    Direccion: licencias.Direccion
+                },
+                {
+                    Barrio: licencias.Barrio
                 }
-            } else {
-                console.log("No se encuentran datos");
-            }
+            ]
+        }
+        try {
+            setIsLoading(true);
+            console.log('Datos enviados al servidor:', data);
+            const result = await postUserData(data);  // Enviar el array
+            setResult(result);
+            await AsyncStorage.setItem('@licencias', JSON.stringify(result));
+            console.log("Datos Guardados");
+            navigation.replace('Principal');
+
+            console.log('Respuesta del servidor:', result);
         } catch (error) {
-            console.error("Error al cargar los datos", error);
+            console.error('Error al hacer el POST:', error);
+            alert("Datos Inválidos")
         } finally {
-            setIsLoading(false); // Ocultar el ActivityIndicator al finalizar la carga
+            setIsLoading(false);
+        }
+    };
+    // Función para avanzar al siguiente paso
+    const nextStep = () => {
+        if (currentStep < 2) setCurrentStep(currentStep + 1);
+        if (isContinueButtonEnabled == false){
+            alert("Complete los campos")
         }
     };
 
-    function saveData() {
-        handleSubmit();
-        console.log(licencias);
-    }
-
-    function modalHandler() {
-        navigation.navigate("User");
-    }
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => <IconButton title="Tap me" onPress={modalHandler} />
-        });
-    }, [navigation, modalHandler]);
-
-    const Borrar = async () => {
-        await AsyncStorage.removeItem('@licencias');
-        console.log('borrado');
+    // Función para retroceder al paso anterior
+    const previousStep = () => {
+        if (currentStep > 1) setCurrentStep(currentStep - 1);
     };
 
-
+    // Renderizado condicional basado en el paso actual
+    const renderStep = () => {
+        switch (currentStep) {
+            case 1:
+                return (
+                    <>
+                        <View style={styles.imputContainer}>
+                            <View>
+                                <View style={styles.textContainer}>
+                                    <TextInput
+                                        style={styles.textImput}
+                                        placeholder='Ingrese el código'
+                                         placeholderTextColor="#616060"
+                                        onChangeText={(text) => handleChange("panicAppCode", text)}
+                                        value={licencias.panicAppCode}
+                                    />
+                                    <MaterialIcons name={"vpn-key"} size={24} color="#000" style={styles.icon} />
+                                </View>
+                            </View>
+                            <View>
+                                <View style={styles.textContainer}>
+                                    <TextInput
+                                        style={styles.textImput}
+                                        placeholder='Ingrese número de equipo'
+                                         placeholderTextColor="#616060"
+                                        onChangeText={(text) => handleChange("targetDeviceCode", text)}
+                                        value={licencias.targetDeviceCode}
+                                    />
+                                    <MaterialIcons name={"vpn-key"} size={24} color="#000" style={styles.icon} />
+                                </View>
+                            </View>
+                            <View>
+                                <View style={styles.textContainer}>
+                                    <TextInput
+                                        style={styles.textImput}
+                                        placeholder='Ingrese número de cuenta'
+                                         placeholderTextColor="#616060"
+                                        onChangeText={(text) => handleChange("accountNumber", text)}
+                                        value={licencias.accountNumber}
+                                    />
+                                    <MaterialIcons name={"vpn-key"} size={24} color="#000" style={styles.icon} />
+                                </View>
+                            </View>
+                        </View>
+                    </>
+                );
+            case 2:
+                return (
+                    <>
+                        <KeyboardAwareScrollView
+                            contentContainerStyle={{ flexGrow: 1 }}
+                            enableOnAndroid={true}
+                            extraHeight={150}>
+                            <View style={styles.imputContainer}>
+                                <View>                                  
+                                    <View style={styles.textContainer}>
+                                        <TextInput
+                                            style={styles.textImput}
+                                            placeholder='Ingrese su nombre'
+                                             placeholderTextColor="#616060"
+                                            onChangeText={(text) => handleChange("Nombre", text)}
+                                            value={licencias.Nombre}
+                                        />
+                                        <MaterialIcons name={"person"} size={24} color="#000" style={styles.icon} />
+                                    </View>
+                                </View>
+                                <View>                                  
+                                    <View style={styles.textContainer}>
+                                        <TextInput
+                                            style={styles.textImput}
+                                            placeholder='Ingrese su apellido'
+                                             placeholderTextColor="#616060"
+                                            onChangeText={(text) => handleChange("Apellido", text)}
+                                            value={licencias.Apellido}
+                                        />
+                                        <MaterialIcons name={"person"} size={24} color="#000" style={styles.icon} />
+                                    </View>
+                                </View>
+                                <View>                                  
+                                    <View style={styles.textContainer}>
+                                        <TextInput
+                                            style={styles.textImput}
+                                            placeholder='Ingrese su documento'
+                                             placeholderTextColor="#616060"
+                                            onChangeText={(text) => handleChange("Documento", text)}
+                                            value={licencias.Documento}
+                                        />
+                                        <MaterialIcons name={"subtitles"} size={24} color="#000" style={styles.icon} />
+                                    </View>
+                                </View>
+                                <View>                               
+                                    <View style={styles.textContainer}>
+                                        <TextInput
+                                            style={styles.textImput}
+                                            placeholder='Ingrese su dirección'
+                                             placeholderTextColor="#616060"
+                                            onChangeText={(text) => handleChange("Direccion", text)}
+                                            value={licencias.Direccion}
+                                        />
+                                        <MaterialIcons name={"location-on"} size={24} color="#000" style={styles.icon} />
+                                    </View>
+                                </View>
+                                <View>                              
+                                    <View style={styles.textContainer}>
+                                        <TextInput
+                                            style={styles.textImput}
+                                            placeholder='Ingrese su barrio'
+                                            placeholderTextColor="#616060"
+                                            onChangeText={(text) => handleChange("Barrio", text)}
+                                            value={licencias.Barrio}
+                                        />
+                                        <MaterialIcons name={"location-on"} size={24} color="#000" style={styles.icon} />
+                                    </View>
+                                </View>
+                            </View>
+                        </KeyboardAwareScrollView>
+                    </>
+                );
+            default:
+                return null;
+        }
+    };
     return (
-        <ImageBackground source={require('../assets/126353.jpg')} resizeMode="cover" style={styles.rootScreen}>
-            {isLoading ? ( // Mostrar el ActivityIndicator si isLoading es true
+        <>
+            {isLoading ? (
                 <View style={styles.containerActivity}>
-                <ActivityIndicator size="large" color="#ffffff" />
+                    <ActivityIndicator size="large" color="#ffffff" />
                 </View>
             ) : (
-
-            <>
-                <View style={styles.imputContainer}>
-                    <View>
-                        <View>
-                            <Text style={styles.text}>Apellido/Nombre</Text>
-                            <View style={styles.textContainer}>
-                                <TextInput
-                                    style={styles.textImput}
-                                    placeholder='Ingrese Apellido/Nombre'
-                                    onChangeText={(text) => handleChange("nombre", text)}
-                                    value={licencias}
-                                />
-                                <MaterialIcons name={"person"} size={24} color="#000" style={styles.icon} />
-                            </View>
-                        </View>
-                        <View>
-                            <Text style={styles.text}>Documento</Text>
-                            <View style={styles.textContainer}>
-                                <TextInput
-                                    style={styles.textImput}
-                                    placeholder='Ingrese número de documento'
-                                    onChangeText={(text) => handleChange("documento", text)}
-                                    value={licencias}
-                                />
-                                <MaterialIcons name={"subtitles"} size={24} color="#000" style={styles.icon} />
-                            </View>
-                        </View>
-                        <View>
-                            <Text style={styles.text}>Código de Alta</Text>
-                            <View style={styles.textContainer}>
-                                <TextInput
-                                    style={styles.textImput}
-                                    placeholder='Ingrese código de alta'
-                                    onChangeText={(text) => handleChange("codlincencia", text)}
-                                    value={licencias}
-                                />
-                                <MaterialIcons name={"vpn-key"} size={24} color="#000" style={styles.icon} />
-                            </View>
-                        </View>
+                <>
+                    <View >
+                        {renderStep()}
                     </View>
-                </View>
-
-
-
-                <View style={styles.buttonContainer1}>
-                    <TouchableOpacity style={styles.buttonUpdateI} onPress={Borrar}>
-                        <Text>Borrar</Text>
-                    </TouchableOpacity>
-                </View>
-
-
-                <View style={styles.buttonContainer}>
-                    <SaveButton onPress={saveData} />
-                </View>
-            </>
+                    {currentStep > 1 && (
+                        <View style={styles.buttonContainer1}>
+                           
+                            <Pressable
+                                onPress={previousStep}
+                                style={styles.button1}
+                            >
+                                 <View style={styles.iconContainer}>
+                                <MaterialIcons name={"arrow-back"} size={24} color="#ffffff" style={styles.icon2} />
+                                <Text style={styles.textButton}>ANTERIOR</Text>
+                                 </View>
+                            </Pressable>
+                        </View>
+                    )}
+                    {currentStep < 2 ? (
+                        <View style={styles.buttonContainer1}>
+                            <Pressable
+                                onPress={nextStep}
+                                style={styles.button1}
+                                disabled= {!isContinueButtonEnabled}
+                            >
+                                <View style={styles.iconContainer}>
+                                <Text style={styles.textButton}>SIGUIENTE</Text>
+                                <MaterialIcons name={"arrow-forward"} size={24} color="#ffffff" style={styles.icon} />
+                                </View>
+                            </Pressable>
+                        </View>
+                    ) : (
+                        <View style={styles.button}>
+                            <SaveButton onPress={saveData} isEnabled={isButtonEnabled} />
+                        </View>
+                    )}
+                </>
             )}
-        </ImageBackground>
+        </>
     );
 }
+
 export default Configuration;
 
 const styles = StyleSheet.create({
     rootScreen: {
-        flex: 1
+        flex: 1,
     },
-    buttonContainer: {
-        marginTop: 210,
-    },
-    buttonUpdateI: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        borderRadius: 5,
-        marginTop: 30,
-        backgroundColor: GlobalStyles.colors.inputcontainer,
-        width: 120,
-        alignContent: 'center'
-    },
-    buttonContainer: {
-        marginHorizontal: 1,
-        marginTop: 130,
+    button: {
+        marginTop: 55
     },
     imputContainer: {
         padding: 20,
-        marginTop: 50
-    },
-    text: {
-        color: "white"
-    },
-    container: {
-        flexDirection: 'row',
-
+        marginTop: 5
     },
     textContainer: {
         marginTop: 3,
         marginBottom: 15,
         flexDirection: "row",
         alignItems: "center",
-        borderColor: "#dbd9df",
-        backgroundColor: "#dbd9df",
+        borderColor: "#ffffff",
+        backgroundColor: "#ffffff",
         borderRadius: 6,
-
     },
     textImput: {
         flex: 1,
         borderWidth: 1,
-        borderColor: "#dbd9df",
-        backgroundColor: "#dbd9df",
+        borderColor: "#ffffff",
+        backgroundColor: "#ffffff",
         width: "100%",
         padding: 12,
         color: "#120438",
@@ -221,5 +318,45 @@ const styles = StyleSheet.create({
     containerActivity: {
         flex: 1,
         justifyContent: 'center',
-      },     
+    },
+    button2: {
+        marginTop: 10,
+        width: 189,
+        height: 100,
+        marginLeft: 215,
+    },
+    buttonContainer1: {
+        marginTop: 10,
+        marginLeft: 150,
+        alignItems: "center",
+    },
+    button1: {
+        padding: 10,
+        width: 250,
+        height: 45,
+        margin: 8,
+        borderRadius: 8,
+        overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
+        backgroundColor: '#009CDE',
+        elevation: 4,
+        shadowColor: 'black',
+        shadowOpacity: 0.25,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        alignItems: "center",
+        opacity: 0.9
+    },
+    textButton: {
+        color: "white",
+        fontSize: 15,
+        width: "100%",
+        textAlign: "center",
+    },
+    iconContainer:{
+        flexDirection:"row",
+        alignItems:"stretch"
+    },
+    icon2:{
+        marginLeft:10
+    }
 })
