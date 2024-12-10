@@ -27,10 +27,10 @@ function Configuration() {
     const [currentStep, setCurrentStep] = useState(1);
     const [result, setResult] = useState(null)
     const [isButtonEnabled, setIsButtonEnabled] = useState(false)
-    const [isContinueButtonEnabled,setContinueButtonEnabled] = useState(false)
+    const [isContinueButtonEnabled, setContinueButtonEnabled] = useState(false)
 
-    useEffect(()=>{
-        if(licencias.panicAppCode && licencias.targetDeviceCode && licencias.accountNumber){
+    useEffect(() => {
+        if (licencias.panicAppCode && licencias.targetDeviceCode && licencias.accountNumber) {
             setContinueButtonEnabled(true)
         } else {
             setContinueButtonEnabled(false)
@@ -45,7 +45,7 @@ function Configuration() {
         }
     }, [licencias]);
 
-   
+
 
 
     const [isLoading, setIsLoading] = useState(false);
@@ -99,7 +99,7 @@ function Configuration() {
     // Función para avanzar al siguiente paso
     const nextStep = () => {
         if (currentStep < 2) setCurrentStep(currentStep + 1);
-        if (isContinueButtonEnabled == false){
+        if (isContinueButtonEnabled == false) {
             alert("Complete los campos")
         }
     };
@@ -115,13 +115,16 @@ function Configuration() {
             case 1:
                 return (
                     <>
+                        <View style = {styles.title}>
+                            <Text style = {styles.titleText}>Ingrese las Credenciales</Text>
+                        </View>
                         <View style={styles.imputContainer}>
                             <View>
                                 <View style={styles.textContainer}>
                                     <TextInput
                                         style={styles.textImput}
                                         placeholder='Ingrese el código'
-                                         placeholderTextColor="#616060"
+                                        placeholderTextColor="#616060"
                                         onChangeText={(text) => handleChange("panicAppCode", text)}
                                         value={licencias.panicAppCode}
                                     />
@@ -133,7 +136,7 @@ function Configuration() {
                                     <TextInput
                                         style={styles.textImput}
                                         placeholder='Ingrese número de equipo'
-                                         placeholderTextColor="#616060"
+                                        placeholderTextColor="#616060"
                                         onChangeText={(text) => handleChange("targetDeviceCode", text)}
                                         value={licencias.targetDeviceCode}
                                     />
@@ -145,7 +148,7 @@ function Configuration() {
                                     <TextInput
                                         style={styles.textImput}
                                         placeholder='Ingrese número de cuenta'
-                                         placeholderTextColor="#616060"
+                                        placeholderTextColor="#616060"
                                         onChangeText={(text) => handleChange("accountNumber", text)}
                                         value={licencias.accountNumber}
                                     />
@@ -163,55 +166,55 @@ function Configuration() {
                             enableOnAndroid={true}
                             extraHeight={150}>
                             <View style={styles.imputContainer}>
-                                <View>                                  
+                                <View>
                                     <View style={styles.textContainer}>
                                         <TextInput
                                             style={styles.textImput}
                                             placeholder='Ingrese su nombre'
-                                             placeholderTextColor="#616060"
+                                            placeholderTextColor="#616060"
                                             onChangeText={(text) => handleChange("Nombre", text)}
                                             value={licencias.Nombre}
                                         />
                                         <MaterialIcons name={"person"} size={24} color="#000" style={styles.icon} />
                                     </View>
                                 </View>
-                                <View>                                  
+                                <View>
                                     <View style={styles.textContainer}>
                                         <TextInput
                                             style={styles.textImput}
                                             placeholder='Ingrese su apellido'
-                                             placeholderTextColor="#616060"
+                                            placeholderTextColor="#616060"
                                             onChangeText={(text) => handleChange("Apellido", text)}
                                             value={licencias.Apellido}
                                         />
                                         <MaterialIcons name={"person"} size={24} color="#000" style={styles.icon} />
                                     </View>
                                 </View>
-                                <View>                                  
+                                <View>
                                     <View style={styles.textContainer}>
                                         <TextInput
                                             style={styles.textImput}
                                             placeholder='Ingrese su documento'
-                                             placeholderTextColor="#616060"
+                                            placeholderTextColor="#616060"
                                             onChangeText={(text) => handleChange("Documento", text)}
                                             value={licencias.Documento}
                                         />
                                         <MaterialIcons name={"subtitles"} size={24} color="#000" style={styles.icon} />
                                     </View>
                                 </View>
-                                <View>                               
+                                <View>
                                     <View style={styles.textContainer}>
                                         <TextInput
                                             style={styles.textImput}
                                             placeholder='Ingrese su dirección'
-                                             placeholderTextColor="#616060"
+                                            placeholderTextColor="#616060"
                                             onChangeText={(text) => handleChange("Direccion", text)}
                                             value={licencias.Direccion}
                                         />
                                         <MaterialIcons name={"location-on"} size={24} color="#000" style={styles.icon} />
                                     </View>
                                 </View>
-                                <View>                              
+                                <View>
                                     <View style={styles.textContainer}>
                                         <TextInput
                                             style={styles.textImput}
@@ -244,15 +247,15 @@ function Configuration() {
                     </View>
                     {currentStep > 1 && (
                         <View style={styles.buttonContainer1}>
-                           
+
                             <Pressable
                                 onPress={previousStep}
                                 style={styles.button1}
                             >
-                                 <View style={styles.iconContainer}>
-                                <MaterialIcons name={"arrow-back"} size={24} color="#ffffff" style={styles.icon2} />
-                                <Text style={styles.textButton}>ANTERIOR</Text>
-                                 </View>
+                                <View style={styles.iconContainer}>
+                                    <MaterialIcons name={"arrow-back"} size={24} color="#ffffff" style={styles.icon2} />
+                                    <Text style={styles.textButton}>ANTERIOR</Text>
+                                </View>
                             </Pressable>
                         </View>
                     )}
@@ -261,11 +264,11 @@ function Configuration() {
                             <Pressable
                                 onPress={nextStep}
                                 style={styles.button1}
-                                disabled= {!isContinueButtonEnabled}
+                                disabled={!isContinueButtonEnabled}
                             >
                                 <View style={styles.iconContainer}>
-                                <Text style={styles.textButton}>SIGUIENTE</Text>
-                                <MaterialIcons name={"arrow-forward"} size={24} color="#ffffff" style={styles.icon} />
+                                    <Text style={styles.textButton}>SIGUIENTE</Text>
+                                    <MaterialIcons name={"arrow-forward"} size={24} color="#ffffff" style={styles.icon} />
                                 </View>
                             </Pressable>
                         </View>
@@ -352,11 +355,19 @@ const styles = StyleSheet.create({
         width: "100%",
         textAlign: "center",
     },
-    iconContainer:{
-        flexDirection:"row",
-        alignItems:"stretch"
+    iconContainer: {
+        flexDirection: "row",
+        alignItems: "stretch"
     },
-    icon2:{
-        marginLeft:10
+    icon2: {
+        marginLeft: 10
+    },
+    title:{
+        marginTop:10,
+        marginLeft:21,
+    },
+    titleText:{
+        fontSize: 17,
+        fontFamily: "open-sans-bold",
     }
 })
