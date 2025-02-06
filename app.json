@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "DoctaPánico",
+    "name": "DoctaPánicoCerrado",
     "slug": "DesitApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.herreramauro.DesitApp"
+      "package": "com.herreramauro.DesitAppCerrado"
     },
     "web": {
       "favicon": "./assets/favicon.png"

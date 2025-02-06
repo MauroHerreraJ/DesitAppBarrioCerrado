@@ -26,9 +26,10 @@ function User() {
   };
   const maskLicenseCode = (code) => {
     if (!code) return ''; // Devuelve una cadena vacía si code es null o undefined
-    if (code.length > 24) {
-      // Reemplazamos los primeros 24 caracteres con asteriscos
-      return '*'.repeat(24) + code.slice(24);
+    if (code.length >= 4) {
+      // Reemplazar los últimos 4 caracteres con asteriscos
+      return code.slice(0, -4) + '****';
+
     }
     return code; // Si el código tiene menos de 24 caracteres, se devuelve tal cual
   };
@@ -96,12 +97,12 @@ function User() {
           </View>
           <View style={styles.textContainer}>
           <Text style={styles.text}>Licencia: </Text>
-          <Text style={styles.textData}>{licencia.code}</Text> 
+          <Text style={styles.textData}>{maskLicenseCode(licencia.code)}</Text> 
           <View style={styles.underline}></View>
         </View>
           <View style={styles.textContainer}>
             <Text style={styles.text}>Equipo: </Text>
-            <Text style={styles.textData}>{maskLicenseCode (licencia.targetDeviceCode)}</Text>
+            <Text style={styles.textData}>{licencia.targetDeviceCode}</Text>
             <View style={styles.underline}></View>
           </View>
           <View style={styles.textContainer}>

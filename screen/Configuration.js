@@ -5,13 +5,13 @@ import { useState, useEffect } from "react";
 import { postUserData } from "../util/Api";
 import { MaterialIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Dimensions } from "react-native";
 
 import SaveButton from "../component/SaveButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 function Configuration() {
-
+const {width,height} = Dimensions.get("window")
     const navigation = useNavigation();
     const [licencias, setLicencias] = useState({
         panicAppCode: "",
@@ -31,12 +31,11 @@ function Configuration() {
 
     useEffect(() => {
         if (licencias.panicAppCode && licencias.targetDeviceCode && licencias.accountNumber) {
-            setContinueButtonEnabled(true)
+            setContinueButtonEnabled(true);
         } else {
-            setContinueButtonEnabled(false)
+            setContinueButtonEnabled(false);
         }
-    })
-
+    }, [licencias]); // <- Agregar dependencias
     useEffect(() => {
         if (licencias.Nombre && licencias.Apellido && licencias.Documento && licencias.Direccion && licencias.Barrio) {
             setIsButtonEnabled(true);
@@ -45,16 +44,38 @@ function Configuration() {
         }
     }, [licencias]);
 
-
-
+    useEffect(() => {
+        console.log("Ejecutando useEffect para recuperar datos de AsyncStorage");
+        const fetchStoredData = async () => {
+            try {
+                const storedData = await AsyncStorage.getItem('@licencias');
+                if (storedData !== null) {
+                    const parsedData = JSON.parse(storedData);
+                    
+                    // Extrae un dato específico (ejemplo: `accountNumber`)
+                    const accountNumber = parsedData?.accountNumber;
+                    
+                    if (accountNumber) {
+                        console.log("Número de cuenta recuperado:", accountNumber);
+                        
+                        // Realiza una segunda consulta usando el dato recuperado
+                        const secondResponse = await postUserData({ accountNumber });
+                        console.log("Segunda consulta respuesta:", secondResponse);
+                    }
+                }
+            } catch (error) {
+                console.error("Error al recuperar datos de AsyncStorage:", error);
+            }
+        };
+    
+        fetchStoredData();
+    }, []);
 
     const [isLoading, setIsLoading] = useState(false);
-
 
     const handleChange = (name, value) => {
         setLicencias({ ...licencias, [name]: value });
     }
-
     const saveData = async () => {
         // Construir el array que espera el servidor
         const data = {
@@ -95,7 +116,10 @@ function Configuration() {
         } finally {
             setIsLoading(false);
         }
+    
     };
+
+   
     // Función para avanzar al siguiente paso
     const nextStep = () => {
         if (currentStep < 2) setCurrentStep(currentStep + 1);
@@ -103,7 +127,6 @@ function Configuration() {
             alert("Complete los campos")
         }
     };
-
     // Función para retroceder al paso anterior
     const previousStep = () => {
         if (currentStep > 1) setCurrentStep(currentStep - 1);
@@ -247,7 +270,6 @@ function Configuration() {
                     </View>
                     {currentStep > 1 && (
                         <View style={styles.buttonContainer1}>
-
                             <Pressable
                                 onPress={previousStep}
                                 style={styles.button1}
@@ -290,7 +312,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
-        marginTop: 55
+        marginTop: 55,
+        alignSelf: "stretch",
     },
     imputContainer: {
         padding: 20,
@@ -335,7 +358,7 @@ const styles = StyleSheet.create({
     },
     button1: {
         padding: 10,
-        width: 250,
+        width: "90%",
         height: 45,
         margin: 8,
         borderRadius: 8,
