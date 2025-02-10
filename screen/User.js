@@ -40,9 +40,11 @@ function User() {
     try {
       const storedLicencia = await AsyncStorage.getItem('@licencias');
       if (storedLicencia) {
-        const parsedLicencia = JSON.parse(storedLicencia);
-        setLicencia(parsedLicencia.licenseCreated); // Accedemos a "licenseCreated"
-        console.log(parsedLicencia.licenseCreated);
+
+        const parsedData = JSON.parse(storedLicencia);
+
+        setLicencia(parsedData.result.licenseCreated); // Accedemos a "licenseCreated"
+        console.log(parsedData.result.licenseCreated);
       }
     } catch (error) {
       console.log("Error al cargar la licencia", error);
@@ -70,6 +72,7 @@ function User() {
   if (!licencia) {
     return (
       <>
+      
         <View style={styles.withoutLicenseContainer}>
           <View >
             <Text style={styles.withoutLicense}>No posee Licencia...</Text>
@@ -88,6 +91,7 @@ function User() {
 
   return (
     <>
+   
       <View style={styles.dataContainer}>
         <View>
           <View style={styles.textContainer}>
@@ -114,13 +118,14 @@ function User() {
           </View>
         </View>
       <View style={styles.container2}>
-        <TouchableOpacity style={styles.buttonUpdate} onPress={Borrar}>
-          <Text>Borrar</Text>
-        </TouchableOpacity>
+       
       <View style={styles.imageContainer}>
         <Image source={require("../assets/logonuevo.png")}
           style={{ width: 59, height: 59 }} />
       </View>
+      <TouchableOpacity style={styles.buttonUpdate} onPress={Borrar}>
+          <Text>Borrar</Text>
+        </TouchableOpacity>
       <View>
         <Text style={styles.textImage}>Producto desarrollado por Desit SA</Text>
       </View>

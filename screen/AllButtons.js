@@ -1,8 +1,7 @@
 import {View,StyleSheet,ImageBackground,Vibration,TouchableOpacity,Image,Animated} from "react-native";
 import React, { useState, useRef } from "react";
-import { savePost } from "../util/ApiLocal";
+import { savePost } from "../util/Api"; 
 import { LinearGradient } from "expo-linear-gradient";
-
 
 const AllButtons = () => {
   const [showProgressBar, setShowProgressBar] = useState(false);
@@ -39,10 +38,9 @@ const AllButtons = () => {
     Vibration.vibrate(500);
     try {
       const result = await savePost({
-       eventCode: "107"
+        eventCode: "200"
       });
-      if (result.status === 200) 
-        console.log(`${eventType} enviado`, result.data);
+      console.log(`${eventType} enviado`, result);
     } catch (error) {
       console.error(error);
     }

@@ -2,7 +2,7 @@ import { View, Text, TextInput, ActivityIndicator, Platform, Pressable } from "r
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
-import { postUserData } from "../util/Api";
+import { postUserData,postToken } from "../util/Api";
 import { MaterialIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dimensions } from "react-native";
@@ -44,33 +44,6 @@ const {width,height} = Dimensions.get("window")
         }
     }, [licencias]);
 
-    useEffect(() => {
-        console.log("Ejecutando useEffect para recuperar datos de AsyncStorage");
-        const fetchStoredData = async () => {
-            try {
-                const storedData = await AsyncStorage.getItem('@licencias');
-                if (storedData !== null) {
-                    const parsedData = JSON.parse(storedData);
-                    
-                    // Extrae un dato específico (ejemplo: `accountNumber`)
-                    const accountNumber = parsedData?.accountNumber;
-                    
-                    if (accountNumber) {
-                        console.log("Número de cuenta recuperado:", accountNumber);
-                        
-                        // Realiza una segunda consulta usando el dato recuperado
-                        const secondResponse = await postUserData({ accountNumber });
-                        console.log("Segunda consulta respuesta:", secondResponse);
-                    }
-                }
-            } catch (error) {
-                console.error("Error al recuperar datos de AsyncStorage:", error);
-            }
-        };
-    
-        fetchStoredData();
-    }, []);
-
     const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (name, value) => {
@@ -78,45 +51,52 @@ const {width,height} = Dimensions.get("window")
     }
     const saveData = async () => {
         // Construir el array que espera el servidor
-        const data = {
-            panicAppCode: licencias.panicAppCode,
-            targetDeviceCode: licencias.targetDeviceCode,
-            accountNumber: licencias.accountNumber,
-            userCustomFields: [
-                {
-                    Nombre: licencias.Nombre
-                },
-                {
-                    Apellido: licencias.Apellido
-                },
-                {
-                    Documento: licencias.Documento
-                },
-                {
-                    Direccion: licencias.Direccion
-                },
-                {
-                    Barrio: licencias.Barrio
-                }
-            ]
-        }
         try {
             setIsLoading(true);
-            console.log('Datos enviados al servidor:', data);
-            const result = await postUserData(data);  // Enviar el array
-            setResult(result);
-            await AsyncStorage.setItem('@licencias', JSON.stringify(result));
-            console.log("Datos Guardados");
-            navigation.replace('Principal');
+            const data = {
+                panicAppCode: licencias.panicAppCode,
+                targetDeviceCode: licencias.targetDeviceCode,
+                accountNumber: licencias.accountNumber,
+                userCustomFields: [
+                    { Nombre: licencias.Nombre },
+                    { Apellido: licencias.Apellido },
+                    { Documento: licencias.Documento },
+                    { Direccion: licencias.Direccion },
+                    { Barrio: licencias.Barrio }
+                ]
+            };
 
+            console.log('Datos enviados al servidor:', data);
+            const result = await postUserData(data);
             console.log('Respuesta del servidor:', result);
+    
+            if (result?.licenseCreated?.code) {
+                const codigoExtraido = result.licenseCreated.code;
+                console.log("Código extraído:", codigoExtraido);
+
+                const dataToken = {
+                    grant_type: "authorization_code",
+                    client_id: "g4Qar6R9X3pPUMxWTbhZH7V5JGFf",
+                    license_code: codigoExtraido // Aquí se asigna el código extraído
+                };
+                
+                // Hacer el segundo POST con el código extraído
+                console.log('Datos enviados al servidor:', dataToken);
+                const token = await postToken(dataToken);
+                console.log("Respuesta del segundo POST:",token, );
+
+                //Guardar datos AsyncStorage
+                 await AsyncStorage.setItem('@licencias', JSON.stringify({ result, token }));
+    console.log("Datos Guardados en AsyncStorage");
+                navigation.replace('Principal');
+            }
+            
         } catch (error) {
             console.error('Error al hacer el POST:', error);
-            alert("Datos Inválidos")
+            alert("Datos Inválidos");
         } finally {
             setIsLoading(false);
         }
-    
     };
 
    
