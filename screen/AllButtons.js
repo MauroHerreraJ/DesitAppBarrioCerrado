@@ -11,24 +11,26 @@ const AllButtons = () => {
   const handlePressIn = () => {
     setShowProgressBar(true);
     animatedValue.setValue(0);
-    startTimeRef.current = Date.now();
+
+   // Inicia la animación y usa el callback de start
     Animated.timing(animatedValue, {
       toValue: 1,
-      duration: 2000,
+      duration: 900,
       useNativeDriver: false,
-    }).start();
+    }).start(({ finished }) => {
+      if (finished) {
+        // La barra de progreso se llenó
+        enviarEvento("ALARM");
+        setShowProgressBar(false);
+      }
+    });
   };
 
   const handlePressOut = () => {
-    setShowProgressBar(false);
+    // Si se suelta antes de que la animación termine, se detiene
     animatedValue.stopAnimation();
-
-    if (startTimeRef.current) {
-      const pressDuration = Date.now() - startTimeRef.current;
-      if (pressDuration > 600) enviarEvento("ALARM");
-    }
+    setShowProgressBar(false);
   };
-
   const barWidth = animatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: ["0%", "100%"],
@@ -38,14 +40,13 @@ const AllButtons = () => {
     Vibration.vibrate(500);
     try {
       const result = await savePost({
-        eventCode: "200"
+        eventCode: "107"
       });
       console.log(`${eventType} enviado`, result);
     } catch (error) {
       console.error(error);
     }
   };
-
   return (
     <>
       <ImageBackground
@@ -74,7 +75,6 @@ const AllButtons = () => {
     </>
   );
 }
-
 export default AllButtons;
 
 const styles = StyleSheet.create({

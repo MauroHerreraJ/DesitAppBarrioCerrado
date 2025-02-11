@@ -9,12 +9,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 import AllButtons from './screen/AllButtons';
 import Configuration from './screen/Configuration';
 import User from './screen/User';
 import welcome from './screen/Welcome';
-
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -25,7 +23,6 @@ function AuthorizedNavigation() {
       screenOptions={{
         headerStyle: { backgroundColor: '#0d47a1', height: 120 },
         headerTintColor: "white",
-
       }}>
 
       <BottomTabs.Screen
@@ -91,8 +88,6 @@ function NoAuthorizedNavigation() {
   );
 }
 
-
-
 export default function App() {
 
   const [fontsLoaded] = useFonts({
@@ -132,8 +127,6 @@ export default function App() {
   if (!fontsLoaded || !appIsReady) {
     return null; // or a custom loading component
   }
-
-
   return (
     <>
       <StatusBar style='light' />
