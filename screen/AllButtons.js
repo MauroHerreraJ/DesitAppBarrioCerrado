@@ -18,7 +18,8 @@ const AllButtons = () => {
       duration: 900,
       useNativeDriver: false,
     }).start(({ finished }) => {
-      if (finished) {
+      if (finished) { 
+        
         // La barra de progreso se llenó
         enviarEvento("ALARM");
         setShowProgressBar(false);
