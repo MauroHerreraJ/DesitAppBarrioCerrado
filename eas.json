@@ -18,7 +18,10 @@
       "distribution": "internal"
     },
     "production": {
-      "distribution": "store"
+      "distribution": "store",
+      "android": {
+        "buildType": "app-bundle"
+      }
     },
     "adhoc": {
       "distribution": "internal",
